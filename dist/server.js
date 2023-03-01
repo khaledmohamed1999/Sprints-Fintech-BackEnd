@@ -1,0 +1,15 @@
+"use strict";
+exports.__esModule = true;
+var Server_1 = require("./Core/Server");
+var LogMiddleware_1 = require("./Http/Middlewares/LogMiddleware");
+var Routes_1 = require("./Routes");
+var JsonParser_1 = require("./Http/Middlewares/JsonParser");
+var ValidatorMiddleware_1 = require("./Http/Middlewares/ValidatorMiddleware");
+var server = new Server_1.Server();
+server.AddMiddleware(new JsonParser_1.JsonParser());
+server.AddMiddleware(new ValidatorMiddleware_1.ValidatorMiddleware());
+server.AddMiddleware(new LogMiddleware_1.LogMiddleware());
+server.LoadRoute(new Routes_1.ApiRoute());
+server.LoadRoute(new Routes_1.AdminRoute());
+server.LoadRoute(new Routes_1.CustomerRoute());
+server.Start(3000);
