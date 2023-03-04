@@ -25,4 +25,8 @@ class HomeController extends Controller
     {
         return view("services.payOnline");
     }
+    public function admin()
+    {
+        return view("admin.admin");
+    }
 }

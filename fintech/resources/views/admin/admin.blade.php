@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+
+       
+
+       
+        <link rel="stylesheet" href="{{url('css/style.css')}}" />
+        <link rel="stylesheet" href="{{url('css/sidebar.component.css')}}" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet" />
+    
+       
+    </head>
+<body>
+    <div class="wrapper d-flex align-items-stretch" style="height: 100vh;">
+            <nav id="sidebar">
+              
+                  <div class="user-logo m-5 wrapper d-flex">
+                     
+                      <span class="h1 text-uppercase text-dark bg-light px-2">Fin</span>
+                      <span class="h1 text-uppercase text-light bg-primary px-2 ">tech</span>
+                  </div>
+              
+        <ul class="list-unstyled components mb-5">
+          <li >
+            <a href="{{url('admin/user')}}" ><span class="fa fa-home mr-3"></span> Home</a>
+          </li>
+          <li>
+            <a href="{{url('admin/user')}}" ><span class="fa-solid fa-user mr-3"></span>Users</a>
+          </li>
+          <li>
+            <a href="{{ url('logout') }}" ><span class="fa-solid fa-sign-out mr-3"></span>Log out</a>
+          </li>
+          
+        </ul>
+    
+        </nav>
+        
+    </div>
+        <!-- Page Content  -->
+    
