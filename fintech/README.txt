@@ -17,6 +17,8 @@ maged:
 admin/vendor (front)
 admin/add vendor ->crud
 admin/add user ->crud
+login
+register
 
 
 hendy:
