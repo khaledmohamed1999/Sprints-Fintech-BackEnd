@@ -17,45 +17,31 @@ maged:
 admin/vendor (front)
 admin/add vendor ->crud
 admin/add user ->crud
-login
-register
+/transactiion manage -> search by (date -amount - user acc - trans type)
+register -> user (attributes-> two factor)
 
 
 hendy:
 bill payment page
 virtual card info page
-/contact ->post
-/pay bill ->post
-/pay bill(history) ->get
-/pay by refrence
 /generate-card->get
 
 
 khaled:
 /send-money -> check
 /send-money ->post
-/request-money ->check
-/request-money ->post
-/wallet -> balance -transactions
+/wallet -> balance -transactions - withdraw
 
 nouf:
-/login->post
-/sign-up->post
+wallet (transaction history)
+create contact database
+/contact ->post
+/user profile (edit phone - mail - default payment card: true or false)
 
-users->(id - name - number - email - balance - type:vendor-user - role)
- - vendors(user_id, image , href) 
-- transactions(user-id(sender) ,bill_amount- date - reciever, status)
- - virtual cards(user-id , id)
- 
+/pay bill ->post
+/pay bill(history) ->get
+/pay by refrence
+/request-money ->check
+/request-money ->post
 
-
-
-
-
-
-
-
-id - sender -  reciever
-
-
-
+add pass complexity tap in admin panel
