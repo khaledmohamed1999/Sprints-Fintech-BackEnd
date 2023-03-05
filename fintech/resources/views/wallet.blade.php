@@ -42,6 +42,7 @@
                 <th>Sender</th>
                 <th>Reciever</th>
                 <th>Amount</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody class="align-middle" id="products">
@@ -51,6 +52,7 @@
                 <td class="align-middle">Samir</td>
                 <td class="align-middle">You</td>
                 <td class="align-middle">100 EGP</td>
+                <td class="align-middle">Success</td>
               </tr>
               <tr>
                 <td class="align-middle">
@@ -60,6 +62,7 @@
                 <td class="align-middle">Emad</td>
                 <td class="align-middle">You</td>
                 <td class="align-middle">200 EGP</td>
+                <td class="align-middle">Success</td>
               </tr>
               <tr>
                 <td class="align-middle">
@@ -69,6 +72,7 @@
                 <td class="align-middle">You</td>
                 <td class="align-middle">Ahmed</td>
                 <td class="align-middle">150 EGP</td>
+                <td class="align-middle">Fail</td>
               </tr>
               <tr>
                 <td class="align-middle">
@@ -78,6 +82,7 @@
                 <td class="align-middle">Ahmed</td>
                 <td class="align-middle">You</td>
                 <td class="align-middle">100 EGP</td>
+                <td class="align-middle">Fail</td>
               </tr>
               <tr>
                 <td class="align-middle">
@@ -87,6 +92,7 @@
                 <td class="align-middle">You</td>
                 <td class="align-middle">Ahmed</td>
                 <td class="align-middle">300 EGP</td>
+                <td class="align-middle">Fail</td>
               </tr>
             </tbody>
           </table>
