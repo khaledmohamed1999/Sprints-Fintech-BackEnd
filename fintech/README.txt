@@ -30,13 +30,15 @@ virtual card info page
 khaled:
 /send-money -> check
 /send-money ->post
-/wallet -> balance -transactions - withdraw
+/wallet -> - withdraw
 
 nouf:
-wallet (transaction history)
+wallet -> get balance - (transaction history)
 create contact database
 /contact ->post
 /user profile (edit phone - mail - default payment card: true or false)
+
+
 
 /pay bill ->post
 /pay bill(history) ->get
@@ -44,4 +46,15 @@ create contact database
 /request-money ->check
 /request-money ->post
 
-add pass complexity tap in admin panel
+
+
+
+add pass complexity tap in admin panel 
+
+id - sender -  reciever
+
+capital - 8 - num - specail char
+true     false 
+
+
+
