@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ Route::get('/send-money', [WalletController::class,'sendMoney']);
 Route::get('/request-money', [WalletController::class,'requestMoney']);
 Route::get('/pay-bills', [WalletController::class,'payBills']);
 Route::get('/admin', [HomeController::class,'admin']);
+Route::get('/bank-linking',[UserController::class, 'bankLinkView']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
