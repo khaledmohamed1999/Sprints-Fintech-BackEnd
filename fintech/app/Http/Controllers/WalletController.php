@@ -25,4 +25,8 @@ class WalletController extends Controller
     {
         return view("services.payBills");
     }
+
+    public function manageFunds(){
+        return view("user_functions.fund-management");
+    }
 }

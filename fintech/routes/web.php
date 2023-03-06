@@ -21,6 +21,7 @@ Route::get('/contact-us', [HomeController::class,'contact']);
 Route::get('/about-us', [HomeController::class,'about']);
 Route::get('/pay-online', [HomeController::class,'payOnline']);
 Route::get('/wallet',[WalletController::class,'wallet']);
+Route::get('/wallet/manage-funds',[WalletController::class,'manageFunds']);
 Route::get('/send-money', [WalletController::class,'sendMoney']);
 Route::get('/request-money', [WalletController::class,'requestMoney']);
 Route::get('/pay-bills', [WalletController::class,'payBills']);

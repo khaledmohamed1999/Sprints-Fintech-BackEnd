@@ -24,10 +24,10 @@
             <div class="bg-light p-30 mb-5">
                 <form class="form-group">
                     <label style="color: darkgreen;" for="amount">Amount To Deposit:</label><br />
-                    <input disabled class="form-control" type="number" id="amount" name="amount" /><br />
+                    <input class="form-control" type="number" id="amount" name="amount" /><br />
 
                     <div class="pt-2">
-                        <button disabled class="btn btn-primary font-weight-bold py-2">Deposit</button>
+                        <button class="btn btn-primary font-weight-bold py-2">Deposit</button>
                     </div>
                 </form>
             </div>

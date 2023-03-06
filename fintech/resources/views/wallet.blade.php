@@ -24,9 +24,9 @@
           </div>
         </div>
         <div class="pt-2">
-          <button class="btn btn-block btn-primary font-weight-bold py-3">
-            Add Funds
-          </button>
+          <a href='{{URL::current() . "/manage-funds"}}' class="btn btn-block btn-primary font-weight-bold py-3">
+            Manage Funds
+          </a>
         </div>
       </div>
     </div>
