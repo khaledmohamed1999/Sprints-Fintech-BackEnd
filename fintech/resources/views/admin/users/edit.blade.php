@@ -28,9 +28,9 @@
     @error('balance')
         <div class="alert alert-danger">{{ $message }}</div>
     @enderror
-    <label>Phone</label>
-    <input class="form-control" name="phone" type="number" value="{{ old('phone',$user->phone) }}"  />
-    @error('phone')
+    <label>Phone Number</label>
+    <input class="form-control" name="phone_number" type="text" value="{{ old('phone_number',$user->phone_number) }}"  />
+    @error('phone_number')
         <div class="alert alert-danger">{{ $message }}</div>
     @enderror
     <label>Type</label><br> <input class="form-control" name="type" type="text" value="{{ old('type',$user->type) }}" /></label>

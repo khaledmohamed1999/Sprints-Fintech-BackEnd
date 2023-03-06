@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults(),'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!@$#%]).*$/'],
-            'phone_number' => ['required', 'numeric', 'size:11']
+            'phone_number' => ['required', 'numeric', 'min_digits:11', 'max_digits:11',]
         ], [
             'password.regex' => 'Passwords should contain three of the four character types:
             Uppercase letters: A-Z.

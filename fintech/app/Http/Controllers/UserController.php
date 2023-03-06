@@ -54,7 +54,7 @@ class UserController extends Controller
         $request->validate([
          'name' => ['required', 'string', 'max:255'],
          'email' => ['required', 'string', 'email', 'max:255'],
-         'phone_number' => ['required', 'numeric', 'min:11',],
+         'phone_number' => ['required', 'numeric', 'min_digits:11', 'max_digits:11'],
          'type' => ["required" , "regex:(vendor|user)"]
      ]);
         $user->fill($request->post());
@@ -62,7 +62,7 @@ class UserController extends Controller
         $user['name'] = $request['name'];
         $user['email'] = $request['email'];
         $user['balance'] = $request['balance'];
-        $user['phone_number'] = $request['phone'];
+        $user['phone_number'] = $request['phone_number'];
         $user['name'] = $request['name'];
         $user['type']=$request['type'];
         $user['is_admin'] = $request['is_admin'] ? 1 : 0;
