@@ -33,13 +33,25 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Rules\Password::defaults(),'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
+            'phone' => ['required', 'numeric', 'min:11',]
+        ], [
+            'password.regex' => 'Passwords should contain three of the four character types:
+            Uppercase letters: A-Z.
+            Lowercase letters: a-z.
+            Numbers: 0-9.
+            Symbols'
+            
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+            'type'=> 'user',
+            'balance'=> 0,
+            'two_factor_authentication' =>($request->two_factor_authentication =='ON')? 1:0,
         ]);
 
         event(new Registered($user));

@@ -15,7 +15,17 @@
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
+ <!-- phone -->
+ <div class="mt-4">
+    <x-input-label for="phone" :value="__('Phone')" />
 
+    <x-text-input id="phone" class="block mt-1 w-full"
+                    type="text"
+                    name="phone"
+                    />
+
+    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+</div>
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
@@ -27,6 +37,7 @@
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
+       
 
         <!-- Confirm Password -->
         <div class="mt-4">
@@ -38,6 +49,17 @@
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
+               <!-- two_factor_auth -->
+               <div class="mt-4">
+                <x-input-label for="two_factor_authentication" :value="__('Two factor authentication')" />
+    
+                <x-text-input id="two_factor_authentication" class="block mt-1"
+                                type="checkbox"
+                                
+                                name="two_factor_authentication"  />
+    
+                
+            </div>
 
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
