@@ -1,6 +1,9 @@
 @extends('layouts.mainSite')
 @section('content')
     <div class="container-fluid">
+        <a class="btn btn-info ml-5" href="wallet">Go Back To Wallet</a> 
+        <br>
+        <br>
         <div class="ml-5 inline col-lg-6">
             <h3 style="color: darkgreen">Withdraw Money</h3>
             <div class="bg-light p-30 mb-5">

@@ -29,4 +29,8 @@ class WalletController extends Controller
     public function manageFunds(){
         return view("user_functions.fund-management");
     }
+
+    public function bankLinkView(){
+        return view('user_functions.bank-linking');
+    }
 }

@@ -25,8 +25,8 @@ Route::get('/wallet/manage-funds',[WalletController::class,'manageFunds']);
 Route::get('/send-money', [WalletController::class,'sendMoney']);
 Route::get('/request-money', [WalletController::class,'requestMoney']);
 Route::get('/pay-bills', [WalletController::class,'payBills']);
+Route::get('wallet/bank-linking',[WalletController::class, 'bankLinkView']);
 Route::get('/admin', [HomeController::class,'admin']);
-Route::get('/bank-linking',[UserController::class, 'bankLinkView']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -6,7 +6,5 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function bankLinkView(){
-        return view('user_functions.bank-linking');
-    }
+    
 }
