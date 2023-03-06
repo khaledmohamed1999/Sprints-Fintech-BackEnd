@@ -26,10 +26,13 @@
               
         <ul class="list-unstyled components mb-5">
           <li >
-            <a href="{{url('admin/user')}}" ><span class="fa fa-home mr-3"></span> Home</a>
+            <a href="{{url('/admin')}}" ><span class="fa fa-home mr-3"></span> Home</a>
           </li>
           <li>
-            <a href="{{url('admin/user')}}" ><span class="fa-solid fa-user mr-3"></span>Users</a>
+            <a href="{{url('admin/users')}}" ><span class="fa-solid fa-user mr-3"></span>Users</a>
+          </li>
+          <li>
+            <a href="{{url('admin/vendors')}}" ><span class="fa-solid fa-store mr-3"></span>Vendors</a>
           </li>
           <li>
             <a href="{{ url('logout') }}" ><span class="fa-solid fa-sign-out mr-3"></span>Log out</a>
@@ -38,7 +41,7 @@
         </ul>
     
         </nav>
-        
+        @yield('users')
     </div>
         <!-- Page Content  -->
     

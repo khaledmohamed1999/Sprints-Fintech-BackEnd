@@ -16,6 +16,22 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+Route::prefix('/admin')->group (function () {
+
+    Route::get('/users', [UserController::class,'user']);
+    Route::post('/users', [UserController::class,'store'])->name('users');;
+    Route::get('/users/create', [UserController::class, 'create']);
+    Route::get('/users/{id}/edit', [UserController::class, 'edit']);
+    Route::patch('/users/{id}', [UserController::class, 'update']);
+    Route::delete('/users/{id}/', [UserController::class, 'delete']);
+    Route::get('/vendors', [UserController::class,'vendor']);
+   
+});
+
+
+
 Route::get('/', [HomeController::class,'index']);
 Route::get('/contact-us', [HomeController::class,'contact']);
 Route::get('/about-us', [HomeController::class,'about']);
@@ -23,7 +39,8 @@ Route::get('/pay-online', [HomeController::class,'payOnline']);
 Route::get('/send-money', [WalletController::class,'sendMoney']);
 Route::get('/request-money', [WalletController::class,'requestMoney']);
 Route::get('/pay-bills', [WalletController::class,'payBills']);
-Route::get('/admin', [HomeController::class,'admin']);
+
+Route::get('/admin/users', [UserController::class,'user']);
 
 Route::prefix('wallet')->group(function(){
     Route::get('',[WalletController::class,'wallet']);
