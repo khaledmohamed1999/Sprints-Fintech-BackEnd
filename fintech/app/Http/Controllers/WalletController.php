@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bank;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Redirect;
 
 class WalletController extends Controller
@@ -44,6 +46,8 @@ class WalletController extends Controller
         $request->validate(Bank::$rules);
         $bankcard = new Bank;
         $date = $request->post()['expiry'];
+        $cardNumberHashed = Hash::make($request->post()['number']);
+        $cvvHashed = Hash::make($request->post()['cvv']);
         $month = (int)(explode('-',$date)[1]);
         $year = (int)(explode('-',$date)[0]);
         $currentYear = (int)date("Y");
@@ -51,15 +55,21 @@ class WalletController extends Controller
 
         if($currentYear < $year){
             $bankcard->fill($request->post());
+            $bankcard['user_id'] = Auth::id();
+            $bankcard['number'] = $cardNumberHashed;
+            $bankcard['cvv'] = $cvvHashed;
             $bankcard->save();
-            return redirect()->route('wallet');
+            return redirect()->route('/wallet');
         }
 
         elseif ($currentYear == $year) {
             if($currentMonth <= $month){
                 $bankcard->fill($request->post());
+                $bankcard['user_id'] = Auth::id();
+                $bankcard['number'] = $cardNumberHashed;
+                $bankcard['cvv'] = $cvvHashed;
                 $bankcard->save();
-                return redirect()->route('wallet');
+                return redirect()->route('/wallet');
             }
 
             else

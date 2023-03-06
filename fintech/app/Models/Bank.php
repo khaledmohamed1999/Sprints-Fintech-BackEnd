@@ -11,9 +11,9 @@ class Bank extends Model
     public $timestamps = false;
 
     public static $rules = [
-        'number' => 'required',
-        'name' => 'required',
-        'cvv' => 'required',
+        'number' => ['required', 'numeric', 'min_digits:16', 'max_digits:16',],
+        'name' => ['required', 'max:255',],
+        'cvv' => ['required', 'numeric', 'min_digits:3', 'max_digits:4',],
         'expiry' => 'required',
     ];
 
