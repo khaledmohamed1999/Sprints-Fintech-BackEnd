@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bank', function (Blueprint $table) {
+        Schema::create('banks', function (Blueprint $table) {
             $table->string('number')->primary();
             $table->string('name');
             $table->string('cvv');
-            $table->date('expiry');
+            $table->string('expiry');
+            $table->boolean('default')->default(false);
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bank');
+        Schema::dropIfExists('banks');
     }
 };
