@@ -18,44 +18,38 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::prefix('/admin')->group (function () {
-    Route::get('/users', [UserController::class,'user']);
-    Route::post('/users', [UserController::class,'store'])->name('users');;
-    Route::get('/users/create', [UserController::class, 'create']);
-    Route::get('/users/{id}/edit', [UserController::class, 'edit']);
-    Route::patch('/users/{id}', [UserController::class, 'update']);
-    Route::delete('/users/{id}/', [UserController::class, 'delete']);
-    Route::get('/vendors', [UserController::class,'vendor']);
-   
+Route::middleware('auth')->group(function () {
+    Route::get('/pay-online', [HomeController::class,'payOnline']);
+    Route::get('/send-money', [WalletController::class,'sendMoney']);
+    Route::get('/request-money', [WalletController::class,'requestMoney']);
+    Route::get('/pay-bills', [WalletController::class,'payBills']);
+    
+    Route::prefix('wallet')->group(function(){
+        Route::get('',[WalletController::class,'wallet']);
+        Route::get('manage-funds',[WalletController::class,'manageFunds']);
+        Route::get('bank-linking',[WalletController::class, 'bankLinkView']);
+        Route::post('bank-linking/link',[WalletController::class, 'bankLink']);
+    });
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
 });
-
-
 
 Route::get('/', [HomeController::class,'index']);
 Route::get('/contact-us', [HomeController::class,'contact']);
 Route::get('/about-us', [HomeController::class,'about']);
-Route::get('/pay-online', [HomeController::class,'payOnline']);
-Route::get('/send-money', [WalletController::class,'sendMoney']);
-Route::get('/request-money', [WalletController::class,'requestMoney']);
-Route::get('/pay-bills', [WalletController::class,'payBills']);
 
-Route::get('/admin/users', [UserController::class,'user']);
 
-Route::prefix('wallet')->group(function(){
-    Route::get('',[WalletController::class,'wallet']);
-    Route::get('manage-funds',[WalletController::class,'manageFunds']);
-    Route::get('bank-linking',[WalletController::class, 'bankLinkView']);
-    Route::post('bank-linking/link',[WalletController::class, 'bankLink']);
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
 
 Route::prefix('/admin')->group (function () {
