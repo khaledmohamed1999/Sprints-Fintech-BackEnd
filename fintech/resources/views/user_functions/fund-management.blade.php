@@ -1,7 +1,7 @@
 @extends('layouts.mainSite')
 @section('content')
     <div class="container-fluid">
-        <a class="btn btn-info ml-5" href="wallet">Go Back To Wallet</a> 
+        <a class="btn btn-info ml-5" href="/wallet">Go Back To Wallet</a> 
         <br>
         <br>
         <div class="ml-5 inline col-lg-6">
