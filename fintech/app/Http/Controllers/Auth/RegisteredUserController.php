@@ -33,8 +33,8 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults(),'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
-            'phone' => ['required', 'numeric', 'min:11',]
+            'password' => ['required', 'confirmed', Rules\Password::defaults(),'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!@$#%]).*$/'],
+            'phone_number' => ['required', 'numeric', 'size:11']
         ], [
             'password.regex' => 'Passwords should contain three of the four character types:
             Uppercase letters: A-Z.
@@ -48,10 +48,10 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'phone' => $request->phone,
+            'phone_number' => $request->phone_number,
             'type'=> 'user',
             'balance'=> 0,
-            'two_factor_authentication' =>($request->two_factor_authentication =='ON')? 1:0,
+            'two_factor_authenticated' =>($request->two_factor_authentication =='ON')? 1:0,
         ]);
 
         event(new Registered($user));

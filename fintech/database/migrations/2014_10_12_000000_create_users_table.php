@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('type');
             $table->string('phone_number');
-            $table->string('2fa_token');
+            $table->string('2fa_token')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->boolean('two_factor_authenticated')->default(false);
             $table->float('balance');
