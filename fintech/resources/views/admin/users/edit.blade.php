@@ -9,6 +9,7 @@
     <link href="{{ url('css/style.css') }}" rel="stylesheet" />
 </head>
 <body style="padding: 100px">
+    
 <h1 style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">Edit User</h1>
 <form method="POST" action="{{ url('admin/users/'.$user['id']) }}" enctype="multipart/form-data">
     @csrf

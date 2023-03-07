@@ -52,8 +52,9 @@ Route::middleware('auth')->group(function () {
 
 });
 
-Route::prefix('/admin')->group (function () {
+Route::middleware('can:is_admin')->prefix('/admin')->group (function () {
 
+    Route::get('', [HomeController::class,'admin']);
     Route::get('/users', [UserController::class,'user']);
     Route::post('/users', [UserController::class,'store'])->name('users');;
     Route::get('/users/create', [UserController::class, 'create']);

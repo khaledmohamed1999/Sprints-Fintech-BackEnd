@@ -29,12 +29,14 @@
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
-
+            
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
                             name="password"
                             required autocomplete="new-password" />
-
+                            <p class=" text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                {{ __('Password should have number,capital & small letter & special character ') }}
+                            </p>
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
        
@@ -52,11 +54,11 @@
                <!-- two_factor_auth -->
                <div class="mt-4">
                 <x-input-label for="two_factor_authentication" :value="__('Two factor authentication')" />
-    
+                
                 <x-text-input id="two_factor_authentication" class="block mt-1"
                                 type="checkbox"
-                                
-                                name="two_factor_authentication"  />
+                             
+                                name="two_factor_authenticated" />
     
                 
             </div>

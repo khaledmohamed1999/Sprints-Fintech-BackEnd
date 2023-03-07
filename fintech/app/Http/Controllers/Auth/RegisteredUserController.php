@@ -45,13 +45,14 @@ class RegisteredUserController extends Controller
         ]);
 
         $user = User::create([
+           
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'phone_number' => $request->phone_number,
             'type'=> 'user',
             'balance'=> 0,
-            'two_factor_authenticated' =>($request->two_factor_authentication =='ON')? 1:0,
+            $user['two_factor_authenticated'] = $request['two_factor_authenticated'] ? 1 : 0,
         ]);
 
         event(new Registered($user));
