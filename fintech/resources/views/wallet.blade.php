@@ -15,6 +15,9 @@
 
     <div class="container-fluid">
         <div class="ml-5 inline col-lg-5">
+            @if (session()->has('messageSuc'))
+                <div class="alert alert-success"> {{ session()->get('messageSuc')}} </div>
+            @endif
             <h5 style="color: darkgreen;" class=" bg-secondary  section-title position-relative text-uppercase mb-3">Wallet
                 Balance</h5>
             <div class="bg-light p-30 mb-5">

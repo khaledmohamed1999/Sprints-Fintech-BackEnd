@@ -23,6 +23,9 @@
 
         <div class="ml-5 inline col-lg-6">
             <h3 style="color: darkgreen">Link Your Bank Card</h3>
+            @if (session()->has('messageError'))
+                <div class="alert alert-danger"> {{ session()->get('messageError')}} </div>
+            @endif
             <div class="bg-light p-30 mb-5">
                 <form method="POST" action="{{url(URL::current() . '/link')}}" enctype="multipart/form-data" class="form-group">
                   @csrf

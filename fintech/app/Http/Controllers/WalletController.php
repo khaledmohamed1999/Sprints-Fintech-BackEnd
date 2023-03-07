@@ -72,7 +72,7 @@ class WalletController extends Controller
                         $bankcard['user_id'] = Auth::id();
                         $bankcard['cvv'] = $cvvHashed;
                         $bankcard->save();
-                        return redirect('/wallet');
+                        return redirect('/wallet')->with('messageSuc', 'Card Successfully Linked!');
                     }
             
                     elseif ($currentYear == $year) {
@@ -85,11 +85,11 @@ class WalletController extends Controller
                         }
             
                         else
-                            return redirect()->back()->withErrors('Card Is Already Expired');
+                            return redirect()->back()->with('messageError','Card Is Already Expired');
                     }
             
                     else
-                        return redirect()->back()->withErrors('Card Is Already Expired');
+                        return redirect()->back()->with('messageError','Card Is Already Expired');
                 }
             }
         }
