@@ -15,13 +15,16 @@
 
     <div class="container-fluid">
         <div class="ml-5 inline col-lg-5">
+            @if (session()->has('messageSuc'))
+                <div class="alert alert-success"> {{ session()->get('messageSuc')}} </div>
+            @endif
             <h5 style="color: darkgreen;" class=" bg-secondary  section-title position-relative text-uppercase mb-3">Wallet
                 Balance</h5>
             <div class="bg-light p-30 mb-5">
                 <img style="display: inline-block;" src="{{ url('img/balance.jfif') }}" alt="">
                 <div style="display: inline-block;" class="border-bottom">
                     <div class="d-flex justify-content-between mb-3">
-                        <h5>Balance: 3000 EGP</h5>
+                        <h5>Balance: {{Auth::user()['balance']}} EGP</h5>
                     </div>
                 </div>
                 <div class="pt-2">
