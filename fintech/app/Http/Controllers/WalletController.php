@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Bank;
 use App\Models\BankAccount;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Redirect;
 
@@ -102,7 +104,32 @@ class WalletController extends Controller
     }
 
     public function withdraw(Request $request){
-        
+        $userBalance = Auth::user()['balance'];
+        $amount = $request->post()['amount'];
+        if($amount > 0){
+            if($userBalance > 0 && $userBalance >= $amount){
+                $defaultPaymentCard = (DB::table('banks')
+                ->where('user_id',Auth::id())
+                ->where('default',1)
+                ->first());
+                $account = BankAccount::find($defaultPaymentCard->number);
+                if($account){
+                    $oldfunds = $account->funds;
+                    User::findOrFail(Auth::id())->update(['balance' => ($userBalance - $amount)]);
+                    BankAccount::findOrFail($defaultPaymentCard->number)->update(['funds' => ($oldfunds + $amount)]);
+                    return redirect('/wallet')->with('messageSuc','Amount added to bank successfully');
+                }
+    
+                else
+                    return redirect()->back()->with('messageError','Your default account does not exist');
+            }
+    
+            else
+                return redirect()->back()->with('messageError','You have no funds in your wallet');
+        }
+
+        else
+            return redirect()->back()->with('messageError','You need amount greater than 0');
     }
 
     public function depositMoney(Request $request){
@@ -110,6 +137,31 @@ class WalletController extends Controller
     }
 
     public function deposit(Request $request){
-        
+        $userBalance = Auth::user()['balance'];
+        $amount = $request->post()['amount'];
+        $defaultPaymentCard = (DB::table('banks')
+            ->where('user_id',Auth::id())
+            ->where('default',1)
+            ->first());
+        $account = BankAccount::find($defaultPaymentCard->number);
+        if($amount > 0){
+            if($account){
+                if($account->funds > 0 && $account->funds >= $amount){
+                    $oldfunds = $account->funds;
+                    User::findOrFail(Auth::id())->update(['balance' => ($userBalance + $amount)]);
+                    BankAccount::findOrFail($defaultPaymentCard->number)->update(['funds' => ($oldfunds - $amount)]);
+                    return redirect('/wallet')->with('messageSuc','Amount added to wallet successfully');
+                }
+    
+                else
+                    return redirect()->back()->with('messageError','Not enough funds in your account');
+            }
+    
+            else
+                return redirect()->back()->with('messageError','Your default account does not exist');
+        }
+
+        else
+            return redirect()->back()->with('messageError','You need amount greater than 0');
     }
 }
