@@ -43,23 +43,25 @@ class WalletController extends Controller
         return $this->link($request);
     }
 
+
     public function link(Request $request){
         $request->validate(Bank::$rules);
         $bankcard = new Bank;
         $cvvHashed = Hash::make($request->post()['cvv']);
         $account = BankAccount::find($request->post()['number']);
         if(is_null($account))
-            return redirect()->back()->withErrors('Account Does Not Exist');
+            return redirect()->back()->with('messageError','Account Does Not Exist');
         elseif(!is_null(Bank::find($request->post()['number']))){
-            return redirect()->back()->withErrors('Account Already Linked');
+            return redirect()->back()->with('messageError','Account Already Linked');
         }
         else{
             if($request->post()['name'] != $account['account_holder_name'])
-                return redirect()->back()->withErrors('There is no account registered with this user');
+                return redirect()->back()->with('messageError','There is no account registered with this user');
             else{
                 $cvvPost = $request->post()['cvv'];
                 if(!Hash::check($cvvPost,$account['cvv']))
-                    return redirect()->back()->withErrors('Account not registered with this cvv');
+                    return redirect()->back()->with('messageError','Account not registered with this cvv');
+                    
                 else{
                     $date = $request->post()['expiry'];
                     $month = (int)(explode('-',$date)[1]);
@@ -93,5 +95,21 @@ class WalletController extends Controller
                 }
             }
         }
+    }
+
+    public function withdrawMoney(Request $request){
+        return $this->withdraw($request);
+    }
+
+    public function withdraw(Request $request){
+        
+    }
+
+    public function depositMoney(Request $request){
+        return $this->deposit($request);
+    }
+
+    public function deposit(Request $request){
+        
     }
 }

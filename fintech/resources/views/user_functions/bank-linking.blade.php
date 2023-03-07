@@ -14,13 +14,6 @@
         <br>
         <br>
 
-        @if($errors->any())
-          <div class="ml-5 inline col-lg-6">
-            <h4 style="color: red">{{$errors->first()}}</h4>
-            <br>
-          </div>
-        @endif
-
         <div class="ml-5 inline col-lg-6">
             <h3 style="color: darkgreen">Link Your Bank Card</h3>
             @if (session()->has('messageError'))

@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
         Route::get('manage-funds',[WalletController::class,'manageFunds']);
         Route::get('bank-linking',[WalletController::class, 'bankLinkView']);
         Route::post('bank-linking/link',[WalletController::class, 'bankLink']);
+        Route::post('manage-funds/withdraw',[WalletController::class, 'withdrawMoney']);
+        Route::post('manage-funds/deposit',[WalletController::class, 'depositMoney']);
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

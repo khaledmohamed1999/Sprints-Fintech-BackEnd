@@ -24,7 +24,7 @@
                 <img style="display: inline-block;" src="{{ url('img/balance.jfif') }}" alt="">
                 <div style="display: inline-block;" class="border-bottom">
                     <div class="d-flex justify-content-between mb-3">
-                        <h5>Balance: 3000 EGP</h5>
+                        <h5>Balance: {{Auth::user()['balance']}} EGP</h5>
                     </div>
                 </div>
                 <div class="pt-2">
