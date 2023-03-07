@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rules\Unique;
 
 return new class extends Migration
 {
@@ -11,10 +12,19 @@ return new class extends Migration
      */
     public function up(): void
     {
+
+        Schema::create('bank_accounts', function (Blueprint $table) {
+            $table->string('card_number')->primary();
+            $table->string('account_holder_name');
+            $table->integer('funds');
+            $table->string('cvv')->unique();
+        });
+
+
         Schema::create('banks', function (Blueprint $table) {
             $table->string('number')->primary();
             $table->string('name');
-            $table->string('cvv');
+            $table->string('cvv')->unique();
             $table->string('expiry');
             $table->boolean('default')->default(false);
             $table->unsignedBigInteger('user_id');
@@ -29,6 +39,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('bank_accounts');
         Schema::dropIfExists('banks');
     }
 };

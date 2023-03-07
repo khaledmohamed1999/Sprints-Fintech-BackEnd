@@ -18,4 +18,6 @@ class Bank extends Model
     ];
 
     protected $fillable = ['number','name','cvv','expiry'];
+
+    protected $primaryKey = 'number';
 }
