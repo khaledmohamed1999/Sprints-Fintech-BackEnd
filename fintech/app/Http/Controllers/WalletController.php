@@ -50,6 +50,9 @@ class WalletController extends Controller
         $account = BankAccount::find($request->post()['number']);
         if(is_null($account))
             return redirect()->back()->withErrors('Account Does Not Exist');
+        elseif(!is_null(Bank::find($request->post()['number']))){
+            return redirect()->back()->withErrors('Account Already Linked');
+        }
         else{
             if($request->post()['name'] != $account['account_holder_name'])
                 return redirect()->back()->withErrors('There is no account registered with this user');
@@ -69,7 +72,7 @@ class WalletController extends Controller
                         $bankcard['user_id'] = Auth::id();
                         $bankcard['cvv'] = $cvvHashed;
                         $bankcard->save();
-                        return redirect()->route('/wallet');
+                        return redirect('/wallet');
                     }
             
                     elseif ($currentYear == $year) {
@@ -78,7 +81,7 @@ class WalletController extends Controller
                             $bankcard['user_id'] = Auth::id();
                             $bankcard['cvv'] = $cvvHashed;
                             $bankcard->save();
-                            return redirect()->route('/wallet');
+                            return redirect('/wallet');
                         }
             
                         else
