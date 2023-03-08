@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
-    protected function addTransactionRecordFromDeposit(object $user, float $amount, string $status){
+    protected function addTransactionRecordFromFundManagement(object $user, float $amount, string $status){
         $transaction = new Transaction;
         $transaction['sender_id'] = $user['id'];
         $transaction['reciever_id'] = $user['id'];
