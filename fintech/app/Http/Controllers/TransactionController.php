@@ -225,10 +225,10 @@ class TransactionController extends Controller
     private function transactionSecurity($userSearched){
         $userID = Auth::id();
         $checkSend = (Transaction::where('sender_id',$userSearched->id))
-                        ->where('sender_id',$userID)
+                        ->where('reciever_id',$userID)
                         ->get();
         $checkRecieve = (Transaction::where('reciever_id',$userSearched->id))
-                        ->where('reciever_id',$userID)
+                        ->where('sender_id',$userID)
                         ->get();
 
         if($checkSend->count() > 0 && $checkRecieve->count() > 0)
