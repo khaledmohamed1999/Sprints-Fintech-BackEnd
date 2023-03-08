@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bank;
 use App\Models\BankAccount;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\virtual_card;
 use Illuminate\Support\Facades\Auth;
@@ -15,15 +16,21 @@ use Redirect;
 class WalletController extends TransactionController
 {
     public function wallet(){
-        return view('wallet');
+        $transactions = Transaction::where('sender_id',Auth::id())->orWhere('reciever_id',Auth::id())->get();
+        $namesArray = $this->createNamesArray($transactions);
+        return view('wallet')->with([
+            'transactions' => Transaction::where('sender_id',Auth::id())->orWhere('reciever_id',Auth::id())->paginate(10),
+            'namesArray' => $namesArray,
+            'counter'=> 0
+        ]);
     }
 
-    public function sendMoney()
+    public function sendMoneyView()
     {
         return view("services.sendMoney");
     }
 
-    public function requestMoney()
+    public function requestMoneyView()
     {
         return view("services.requestMoney");
     }
@@ -209,6 +216,36 @@ class WalletController extends TransactionController
         else{
             $this->addTransactionRecordFromFundManagement(Auth::user(),$amount,'Failed');
             return redirect()->back()->with('messageError','You need amount greater than 0');
+        }
+    }
+
+    public function sendMoney(Request $request){
+        return $this->sendM($request);
+    }
+
+    private function sendM(Request $request){
+        $amount = $request->post()['amount'];
+        $receiver = User::where('email',$request->post()['email'])->first();
+        if(is_null($receiver)){
+            $this->addTransactionRecordFromService(Auth::user(),$amount,0,'Failed');
+            return redirect('/send-money')->with('messageError','User Does Not Exist');
+        }
+
+        else{
+            $senderBalance = Auth::user()['balance'];
+            $receiverBlanace = $receiver['balance'];
+
+            if($amount > 0 && $amount <= $senderBalance){
+                User::findOrFail(Auth::id())->update(['balance' => ($senderBalance - $amount)]);
+                $receiver->update(['balance' => ($receiverBlanace + $amount)]);
+                $this->addTransactionRecordFromService(Auth::user(),$amount,$receiver['id'],'Successful');
+                return redirect('/send-money')->with('messageSuc','Money Send Successfully');
+            }
+
+            else{
+                $this->addTransactionRecordFromService(Auth::user(),$amount,$receiver,'Failed');
+                return redirect('/send-money')->with('messageError','Not Enough Funds');
+            }
         }
     }
 }

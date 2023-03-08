@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
@@ -18,11 +19,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/pay-online', [HomeController::class,'payOnline']);
-Route::get('/send-money', [WalletController::class,'sendMoney']);
-Route::get('/request-money', [WalletController::class,'requestMoney']);
-Route::get('/pay-bills', [WalletController::class,'payBills']);
-
 Route::middleware('auth')->group(function () {
     Route::prefix('wallet')->group(function(){
         Route::get('',[WalletController::class,'wallet']);
@@ -33,11 +29,18 @@ Route::middleware('auth')->group(function () {
         Route::put('manage-funds/withdraw',[WalletController::class, 'withdrawMoney']);
         Route::put('manage-funds/deposit',[WalletController::class, 'depositMoney']);
         Route::delete('virtual/delete-card/{id}',[WalletController::class, 'deleteVirtualCard']);
+        Route::get('/filter',[TransactionController::class, 'transactionFilter'])->name('filter');
+        Route::get('/filtered-transactions',[TransactionController::class,'filteredTransactionsView'])->name('filteredTransactions');
     });
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/pay-online', [HomeController::class,'payOnline']);
+    Route::get('/send-money', [WalletController::class,'sendMoneyView']);
+    Route::post('/send-money/send-money-request', [WalletController::class,'sendMoney']);
+    Route::get('/request-money', [WalletController::class,'requestMoneyView']);
+    Route::get('/pay-bills', [WalletController::class,'payBills']);
     
 
 });
