@@ -4,7 +4,6 @@
 
 <div>
   <h2 class="m-2" style="color: blue">Vendors</h2>
-  <a class="btn btn-primary m-3" href="{{url('admin/users/create')}}" role="button"  >Add Vendor</a>
   @if (session()->has('message'))
 <div  class="alert alert-success mb-3" role="alert">
     {{ Session::get('message')}}
@@ -15,6 +14,7 @@
     {{ Session::get('alert')}}
   </div>
   @endif
+  
 <table class="table ml-2" style="width: 80vw">
   <thead>
     <tr>
@@ -39,7 +39,7 @@
       <td>
         <a href="admin/user/transactions" style="color: green">Transactions</a>
       </td>
-      <td   ><a  class="btn btn-primary" href="{{url('admin/users/'.$user['id'].'/edit')}}" role="button">EDIT</a></td> <td >
+      <td   ><a class="btn btn-primary mr-1 " style="background-color: green" href="{{url('admin/users/'.$user['id'].'/create')}}" role="button"  >Add Vendor</a><a  class="btn btn-primary" href="{{url('admin/users/'.$user['id'].'/edit')}}" role="button">EDIT</a></td> <td >
         <form action="{{ url('admin/users/'. $user['id']) }}" method="POST">
             @method('DELETE')
             @csrf

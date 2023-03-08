@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 class UserController extends Controller
@@ -21,6 +22,40 @@ class UserController extends Controller
     $users = User::where('type', '=', 'vendor')->paginate(10);
         return view ('admin.vendor', compact('users'));
    }
+
+   //craete
+   public function create($id){
+    $user = User::findOrFail($id);
+   return view('admin.users.create',compact('user'));
+   }
+
+   public function store(Request $request ){
+    
+    $request->validate([
+        
+        'image' => ['required'],
+        'user_id'=>['required']
+        
+    ]);
+    
+    $vendor = new Vendor;
+ 
+            $vendor->fill($request->post());
+            $vendor['image_url'] = $request['image'];
+            $vendor['user_id'] = $request['user_id'];
+            $vendor->save();
+            return redirect()->route('vendors')->with('message', 'Vendor Added Successfully');
+    }
+   //search
+   public function search(Request $request ){
+    $name=$request['name'];
+    $serarch=$request['search_name'];
+      $users=User::where($serarch,'like',  '%' . $name .'%')->where('type','=','user')->paginate(5);
+      return view ('admin.user',compact('users'));
+        }
+      
+      
+   
     /**
      * Show the form for editing the specified resource.
      *

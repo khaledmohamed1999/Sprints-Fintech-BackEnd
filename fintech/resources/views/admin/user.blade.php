@@ -4,7 +4,7 @@
 
 <div>
   <h2 class="m-2" style="color: blue">Users</h2>
-  <a class="btn btn-primary m-3" href="{{url('admin/users/create')}}" role="button"  >Add User</a>
+
   @if (session()->has('message'))
 <div  class="alert alert-success mb-3" role="alert">
     {{ Session::get('message')}}
@@ -15,6 +15,29 @@
     {{ Session::get('alert')}}
   </div>
   @endif
+  <br>
+  
+    <div style="display: inline-flexbox">
+  <form method="POST" action="{{ url('admin/search') }}" enctype="multipart/form-data" >
+    
+    @csrf
+    <label class="ml-5">Search By</label>
+    <select class="form-group" name="search_name">
+      <option value="name" {{ old('search_name') == 'name' ? 'selected' : '' }}>
+              Search By Name</option>
+           
+                <option   {{ (request()->input('search') == 'phone_number') ? 'selected' : '' }}value="phone_number">
+                 Search By Phone Number</option>
+                    
+                          <option value="email" {{ old('search_name') == 'email' ? 'selected' : '' }}>
+                                  Search By E-mail</option>
+            </select>
+              <br>
+    <input class=" border ml-5" type="text" placeholder="Search here" name="name" style="width: 255px">
+								<button class="btn"><i class="fa fa-search"></i></button>
+</form>
+    </div>
+
 <table class="table ml-2" style="width: 80vw">
   <thead>
     <tr>

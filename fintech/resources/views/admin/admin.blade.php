@@ -10,6 +10,7 @@
        
         <link rel="stylesheet" href="{{url('css/style.css')}}" />
         <link rel="stylesheet" href="{{url('css/sidebar.component.css')}}" />
+        <link rel="stylesheet" href="{{url('css/widget.css')}}" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet" />
     
        
@@ -34,10 +35,17 @@
           <li>
             <a href="{{url('admin/vendors')}}" ><span class="fa-solid fa-store mr-3"></span>Vendors</a>
           </li>
-          <li>
-            <a href="{{ url('logout') }}" ><span class="fa-solid fa-sign-out mr-3"></span>Log out</a>
+         
+          <li class="ml-3">
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <x-responsive-nav-link :href="route('logout')"
+              onclick="event.preventDefault();
+                          this.closest('form').submit();"><span class="fa-solid fa-sign-out mr-3"></span>{{ __('Log Out') }}
+            </x-responsive-nav-link>
+          </form>
           </li>
-          
+       
         </ul>
     
         </nav>

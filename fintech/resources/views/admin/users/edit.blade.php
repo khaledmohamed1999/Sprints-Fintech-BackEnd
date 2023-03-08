@@ -45,5 +45,6 @@
     <button class="btn btn-primary">Edit</button>
     <a class="btn btn-secondary" href="{{ url('admin/') }}">Cancel</a>
 </form>
+
 </body>
 </html>

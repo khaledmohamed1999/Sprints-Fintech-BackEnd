@@ -30,6 +30,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
@@ -52,7 +53,7 @@ class RegisteredUserController extends Controller
             'phone_number' => $request->phone_number,
             'type'=> 'user',
             'balance'=> 0,
-            $user['two_factor_authenticated'] = $request['two_factor_authenticated'] ? 1 : 0,
+            $user['two_factor_authenticated'] = $request['two_factor_authenticated']=='on' ? true : false,
         ]);
 
         event(new Registered($user));

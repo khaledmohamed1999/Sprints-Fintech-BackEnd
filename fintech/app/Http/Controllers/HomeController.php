@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -27,6 +28,10 @@ class HomeController extends Controller
     }
     public function admin()
     {
-        return view("admin.admin");
+        $users = User::all();
+        $nusers = User::where('type', '=', 'user');
+        $vendors = User::where('type', '=', 'vendor');
+        return view('admin.adminhome', compact('users','nusers','vendors'));
+        
     }
 }

@@ -57,13 +57,15 @@ Route::middleware('auth')->group(function () {
 Route::middleware('can:is_admin')->prefix('/admin')->group (function () {
 
     Route::get('', [HomeController::class,'admin']);
-    Route::get('/users', [UserController::class,'user']);
-    Route::post('/users', [UserController::class,'store'])->name('users');;
-    Route::get('/users/create', [UserController::class, 'create']);
+    Route::get('/users', [UserController::class,'user'])->name('users');
+    Route::post('/vendor/create', [UserController::class,'store']);
+    Route::get('/users/{id}/create', [UserController::class, 'create']);
     Route::get('/users/{id}/edit', [UserController::class, 'edit']);
     Route::patch('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}/', [UserController::class, 'delete']);
-    Route::get('/vendors', [UserController::class,'vendor']);
+    Route::get('/vendors', [UserController::class,'vendor'])->name('vendors');
+    Route::post('/search', [UserController::class,'search'])->name('search');
+    
    
 });
 
