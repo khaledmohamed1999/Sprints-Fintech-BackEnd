@@ -23,6 +23,7 @@ Route::get('/send-money', [WalletController::class,'sendMoney']);
 Route::get('/request-money', [WalletController::class,'requestMoney']);
 Route::get('/pay-bills', [WalletController::class,'payBills']);
 
+Route::middleware('auth')->group(function () {
     Route::prefix('wallet')->group(function(){
         Route::get('',[WalletController::class,'wallet']);
         Route::get('manage-funds',[WalletController::class,'manageFunds']);
@@ -39,7 +40,6 @@ Route::get('/pay-bills', [WalletController::class,'payBills']);
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
 
-    Route::middleware('auth')->group(function () {
 });
 
 Route::get('/', [HomeController::class,'index']);

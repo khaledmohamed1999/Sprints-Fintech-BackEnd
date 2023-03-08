@@ -43,7 +43,7 @@ class WalletController extends Controller
     public function generateCard(){
         //$user = auth()->user();
         $user = User::first();
-        $cards=virtual_card::where('id','=',$user['id'])->get();
+        $cards=virtual_card::where('user_id','=',$user['id'])->get();
         if(count($cards)>0){
             $card =$cards[0];
         }
