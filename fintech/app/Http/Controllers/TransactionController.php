@@ -194,7 +194,7 @@ class TransactionController extends Controller
                     array_push($namesArray,(User::where('id',$transaction->sender_id)->first()->name));
 
                 if(is_null($transaction->reciever_id))
-                    array_push($namesArray,"None Existant User");
+                    array_push($namesArray,"None Existent User");
                 else{
                     if((User::where('id',$transaction->reciever_id)->first()->name) == Auth::user()->name)
                         array_push($namesArray,"You");
@@ -211,7 +211,7 @@ class TransactionController extends Controller
             else
                 array_push($namesArray,(User::where('id',$transactions->sender_id)->first()->name));
             if(is_null($transactions->reciever_id))
-                array_push($namesArray,"None Existant User");
+                array_push($namesArray,"None Existent User");
             else{
                 if((User::where('id',$transactions->reciever_id)->first()->name) == Auth::user()->name)
                     array_push($namesArray,"You");
