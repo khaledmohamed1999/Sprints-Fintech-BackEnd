@@ -18,6 +18,12 @@
             @if (session()->has('messageSuc'))
                 <div class="alert alert-success"> {{ session()->get('messageSuc')}} </div>
             @endif
+
+            @if (session()->has('messageError'))
+                <div class="alert alert-danger"> {{ session()->get('messageError')}} </div>
+            @endif
+
+
             <h5 style="color: darkgreen;" class=" bg-secondary  section-title position-relative text-uppercase mb-3">Wallet
                 Balance</h5>
             <div class="bg-light p-30 mb-5">
@@ -37,11 +43,32 @@
                         class="btn btn-block btn-primary font-weight-bold py-3">
                         Link Bank Card
                     </a>
+                    <a href='{{ URL::current() . '/generate-card' }}'
+                        class="btn btn-block btn-primary font-weight-bold py-3">
+                        Generate Virtual Card
+                    </a>
                 </div>
             </div>
         </div>
         <div class="col-lg-10 table-responsive mb-5">
             <h3 style="color: darkgreen;">Transaction History</h3>
+
+            <form action='{{ route('filter')}}' method="GET">
+                <input style="width: 35%" type="text" placeholder="Search" name="filterSearch">
+                <select class="form-select" name="filterForTransaction">
+                    <option value="" selected>What Do You Want To Search For?</option>
+                    <option value="sender">Sender Email</option>
+                    <option value="receiver">Receiver Email</option>
+                    <option value="id">Transaction ID</option>
+                    <option value="status">Transaction Status</option>
+                    <option value="date">Date (YYYY-MM)</option>
+                </select>
+                <button type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+
+            <br>
             <table class="table table-light table-borderless table-hover text-center mb-0">
                 <thead style="color: white;background-color: darkblue;">
                     <tr>
@@ -53,57 +80,25 @@
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody class="align-middle" id="products">
-                    <tr>
-                        <td class="align-middle">1</td>
-                        <td class="align-middle"> 12/03/2020 </td>
-                        <td class="align-middle">Samir</td>
-                        <td class="align-middle">You</td>
-                        <td class="align-middle">100 EGP</td>
-                        <td class="align-middle">Success</td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">
-                            2
-                        </td>
-                        <td class="align-middle"> 12/03/2020 </td>
-                        <td class="align-middle">Emad</td>
-                        <td class="align-middle">You</td>
-                        <td class="align-middle">200 EGP</td>
-                        <td class="align-middle">Success</td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">
-                            3
-                        </td>
-                        <td class="align-middle"> 12/03/2020 </td>
-                        <td class="align-middle">You</td>
-                        <td class="align-middle">Ahmed</td>
-                        <td class="align-middle">150 EGP</td>
-                        <td class="align-middle">Fail</td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">
-                            4
-                        </td>
-                        <td class="align-middle"> 12/03/2020 </td>
-                        <td class="align-middle">Ahmed</td>
-                        <td class="align-middle">You</td>
-                        <td class="align-middle">100 EGP</td>
-                        <td class="align-middle">Fail</td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">
-                            5
-                        </td>
-                        <td class="align-middle"> 12/03/2020 </td>
-                        <td class="align-middle">You</td>
-                        <td class="align-middle">Ahmed</td>
-                        <td class="align-middle">300 EGP</td>
-                        <td class="align-middle">Fail</td>
-                    </tr>
+                <tbody class="align-middle">
+                    @if ($transactions->currentPage() > 1)
+                        <p hidden>{{$counter += (($transactions->perPage() * 2) * ($transactions->currentPage()-1))}}</p>
+                    @endif
+                    @foreach ($transactions as $transaction)
+                        <tr>
+                            <td class="align-middle">{{$transaction->id}}</td>
+                            <td class="align-middle"> {{$transaction->created_at}} </td>
+                            <td class="align-middle">{{$namesArray[$counter]}}</td>
+                            <td class="align-middle">{{$namesArray[$counter + 1]}}</td>
+                            <td class="align-middle">{{$transaction->amount}} EGP</td>
+                            <td class="align-middle">{{$transaction->status}}</td>
+                        </tr>
+                        <p hidden>{{$counter += 2}}</p>
+                    @endforeach
                 </tbody>
             </table>
+            <br>
+            <div class="d-flex justify-content-center">{{$transactions->links()}}</div>
         </div>
 
     </div>

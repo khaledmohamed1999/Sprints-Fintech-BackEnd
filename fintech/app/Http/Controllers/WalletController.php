@@ -4,25 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\Bank;
 use App\Models\BankAccount;
+use App\Models\Transaction;
 use App\Models\User;
+use App\Models\virtual_card;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Redirect;
 
-class WalletController extends Controller
+class WalletController extends TransactionController
 {
     public function wallet(){
-        return view('wallet');
+        $transactions = Transaction::where('sender_id',Auth::id())->orWhere('reciever_id',Auth::id())->get();
+        $namesArray = $this->createNamesArray($transactions);
+        return view('wallet')->with([
+            'transactions' => Transaction::where('sender_id',Auth::id())->orWhere('reciever_id',Auth::id())->paginate(10),
+            'namesArray' => $namesArray,
+            'counter'=> 0
+        ]);
     }
 
-    public function sendMoney()
+    public function sendMoneyView()
     {
         return view("services.sendMoney");
     }
 
-    public function requestMoney()
+    public function requestMoneyView()
     {
         return view("services.requestMoney");
     }
@@ -40,13 +48,43 @@ class WalletController extends Controller
     public function bankLinkView(){
         return view('user_functions.bank-linking');
     }
+    public function generateCard(){
+        //$user = auth()->user();
+        $user = Auth::user();
+        $cards=virtual_card::where('user_id','=',$user['id'])->get();
+        if(count($cards)>0){
+            $card =$cards[0];
+        }
+        else{
+            $card = new  virtual_card;
+            $card['user_id']=$user['id'];
+            $card['expiry_date']=date('m');
+            $y=date('y') +3;
+            $card['expiry_date']= $card['expiry_date'] . "/".$y;
+            $card['cvv']=mt_rand(100, 999);
+            $card['card_number']='597823'.
+            mt_rand(1000000000, 9999999999);
+            $card->save();
+        }
+        return view('user_functions.generate-card')->with([
+            'card'=>$card,
+            'user'=>$user,
+
+
+        ]);
+    }
+    public function deleteVirtualCard($id){
+        $virtual = virtual_card::findOrFail($id);
+        virtual_card::destroy($id);
+        return redirect('wallet')->with('success','Card has been deleted');
+    }
 
     public function bankLink(Request $request){
         return $this->link($request);
     }
 
 
-    public function link(Request $request){
+    private function link(Request $request){
         $request->validate(Bank::$rules);
         $bankcard = new Bank;
         $cvvHashed = Hash::make($request->post()['cvv']);
@@ -103,9 +141,11 @@ class WalletController extends Controller
         return $this->withdraw($request);
     }
 
-    public function withdraw(Request $request){
+    private function withdraw(Request $request){
         $userBalance = Auth::user()['balance'];
         $amount = $request->post()['amount'];
+        if(is_null($amount))
+            $amount = 0;
         if($amount > 0){
             if($userBalance > 0 && $userBalance >= $amount){
                 $defaultPaymentCard = (DB::table('banks')
@@ -117,26 +157,33 @@ class WalletController extends Controller
                     $oldfunds = $account->funds;
                     User::findOrFail(Auth::id())->update(['balance' => ($userBalance - $amount)]);
                     BankAccount::findOrFail($defaultPaymentCard->number)->update(['funds' => ($oldfunds + $amount)]);
+                    $this->addTransactionRecordFromFundManagement(Auth::user(),$amount,'Successful');
                     return redirect('/wallet')->with('messageSuc','Amount added to bank successfully');
                 }
     
-                else
+                else{
+                    $this->addTransactionRecordFromFundManagement(Auth::user(),$amount,'Failed');
                     return redirect()->back()->with('messageError','Your default account does not exist');
+                }
             }
     
-            else
+            else{
+                $this->addTransactionRecordFromFundManagement(Auth::user(),$amount,'Failed');
                 return redirect()->back()->with('messageError','You have no funds in your wallet');
+            }
         }
 
-        else
+        else{
+            $this->addTransactionRecordFromFundManagement(Auth::user(),$amount,'Failed');
             return redirect()->back()->with('messageError','You need amount greater than 0');
+        }
     }
 
     public function depositMoney(Request $request){
         return $this->deposit($request);
     }
 
-    public function deposit(Request $request){
+    private function deposit(Request $request){
         $userBalance = Auth::user()['balance'];
         $amount = $request->post()['amount'];
         $defaultPaymentCard = (DB::table('banks')
@@ -150,18 +197,55 @@ class WalletController extends Controller
                     $oldfunds = $account->funds;
                     User::findOrFail(Auth::id())->update(['balance' => ($userBalance + $amount)]);
                     BankAccount::findOrFail($defaultPaymentCard->number)->update(['funds' => ($oldfunds - $amount)]);
+                    $this->addTransactionRecordFromFundManagement(Auth::user(),$amount,'Successful');
                     return redirect('/wallet')->with('messageSuc','Amount added to wallet successfully');
                 }
     
-                else
+                else{
+                    $this->addTransactionRecordFromFundManagement(Auth::user(),$amount,'Failed');
                     return redirect()->back()->with('messageError','Not enough funds in your account');
+                }
             }
     
-            else
+            else{
+                $this->addTransactionRecordFromFundManagement(Auth::user(),$amount,'Failed');
                 return redirect()->back()->with('messageError','Your default account does not exist');
+            }
         }
 
-        else
+        else{
+            $this->addTransactionRecordFromFundManagement(Auth::user(),$amount,'Failed');
             return redirect()->back()->with('messageError','You need amount greater than 0');
+        }
+    }
+
+    public function sendMoney(Request $request){
+        return $this->sendM($request);
+    }
+
+    private function sendM(Request $request){
+        $amount = $request->post()['amount'];
+        $receiver = User::where('email',$request->post()['email'])->first();
+        if(is_null($receiver)){
+            $this->addTransactionRecordFromService(Auth::user(),$amount,0,'Failed');
+            return redirect('/send-money')->with('messageError','User Does Not Exist');
+        }
+
+        else{
+            $senderBalance = Auth::user()['balance'];
+            $receiverBlanace = $receiver['balance'];
+
+            if($amount > 0 && $amount <= $senderBalance){
+                User::findOrFail(Auth::id())->update(['balance' => ($senderBalance - $amount)]);
+                $receiver->update(['balance' => ($receiverBlanace + $amount)]);
+                $this->addTransactionRecordFromService(Auth::user(),$amount,$receiver['id'],'Successful');
+                return redirect('/send-money')->with('messageSuc','Money Send Successfully');
+            }
+
+            else{
+                $this->addTransactionRecordFromService(Auth::user(),$amount,$receiver,'Failed');
+                return redirect('/send-money')->with('messageError','Not Enough Funds');
+            }
+        }
     }
 }
