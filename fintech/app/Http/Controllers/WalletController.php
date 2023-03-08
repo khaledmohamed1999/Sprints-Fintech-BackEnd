@@ -11,12 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Redirect;
-<<<<<<< Updated upstream
-class WalletController extends Controller
-=======
 
 class WalletController extends TransactionController
->>>>>>> Stashed changes
 {
     public function wallet(){
         return view('wallet');
@@ -47,7 +43,7 @@ class WalletController extends TransactionController
     }
     public function generateCard(){
         //$user = auth()->user();
-        $user = User::first();
+        $user = Auth::user();
         $cards=virtual_card::where('user_id','=',$user['id'])->get();
         if(count($cards)>0){
             $card =$cards[0];
@@ -81,7 +77,7 @@ class WalletController extends TransactionController
     }
 
 
-    public function link(Request $request){
+    private function link(Request $request){
         $request->validate(Bank::$rules);
         $bankcard = new Bank;
         $cvvHashed = Hash::make($request->post()['cvv']);
@@ -138,7 +134,7 @@ class WalletController extends TransactionController
         return $this->withdraw($request);
     }
 
-    public function withdraw(Request $request){
+    private function withdraw(Request $request){
         $userBalance = Auth::user()['balance'];
         $amount = $request->post()['amount'];
         if(is_null($amount))
@@ -180,7 +176,7 @@ class WalletController extends TransactionController
         return $this->deposit($request);
     }
 
-    public function deposit(Request $request){
+    private function deposit(Request $request){
         $userBalance = Auth::user()['balance'];
         $amount = $request->post()['amount'];
         $defaultPaymentCard = (DB::table('banks')
