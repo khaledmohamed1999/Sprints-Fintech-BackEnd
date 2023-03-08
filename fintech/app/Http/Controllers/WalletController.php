@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Bank;
 use App\Models\BankAccount;
 use App\Models\User;
+use App\Models\virtual_card;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Redirect;
-
 class WalletController extends Controller
 {
     public function wallet(){
@@ -39,6 +39,36 @@ class WalletController extends Controller
 
     public function bankLinkView(){
         return view('user_functions.bank-linking');
+    }
+    public function generateCard(){
+        //$user = auth()->user();
+        $user = User::first();
+        $cards=virtual_card::where('id','=',$user['id'])->get();
+        if(count($cards)>0){
+            $card =$cards[0];
+        }
+        else{
+            $card = new  virtual_card;
+            $card['user_id']=$user['id'];
+            $card['expiry_date']=date('m');
+            $y=date('y') +3;
+            $card['expiry_date']= $card['expiry_date'] . "/".$y;
+            $card['cvv']=mt_rand(100, 999);
+            $card['card_number']='597823'.
+            mt_rand(1000000000, 9999999999);
+            $card->save();
+        }
+        return view('user_functions.generate-card')->with([
+            'card'=>$card,
+            'user'=>$user,
+
+
+        ]);
+    }
+    public function deleteVirtualCard($id){
+        $virtual = virtual_card::findOrFail($id);
+        virtual_card::destroy($id);
+        return redirect('wallet')->with('success','Card has been deleted');
     }
 
     public function bankLink(Request $request){

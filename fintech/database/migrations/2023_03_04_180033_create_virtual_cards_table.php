@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('cvv');
             $table->string('card_number');
-            $table->date('expiry_date');
+            $table->string('expiry_date');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }

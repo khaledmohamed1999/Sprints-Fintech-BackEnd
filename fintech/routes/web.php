@@ -18,26 +18,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::middleware('auth')->group(function () {
-    Route::get('/pay-online', [HomeController::class,'payOnline']);
-    Route::get('/send-money', [WalletController::class,'sendMoney']);
-    Route::get('/request-money', [WalletController::class,'requestMoney']);
-    Route::get('/pay-bills', [WalletController::class,'payBills']);
-    
+Route::get('/pay-online', [HomeController::class,'payOnline']);
+Route::get('/send-money', [WalletController::class,'sendMoney']);
+Route::get('/request-money', [WalletController::class,'requestMoney']);
+Route::get('/pay-bills', [WalletController::class,'payBills']);
+
     Route::prefix('wallet')->group(function(){
         Route::get('',[WalletController::class,'wallet']);
         Route::get('manage-funds',[WalletController::class,'manageFunds']);
         Route::get('bank-linking',[WalletController::class, 'bankLinkView']);
+        Route::get('generate-card',[WalletController::class, 'generateCard']);
         Route::post('bank-linking/link',[WalletController::class, 'bankLink']);
         Route::put('manage-funds/withdraw',[WalletController::class, 'withdrawMoney']);
         Route::put('manage-funds/deposit',[WalletController::class, 'depositMoney']);
+        Route::delete('virtual/delete-card/{id}',[WalletController::class, 'deleteVirtualCard']);
     });
-
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
 
-
+    Route::middleware('auth')->group(function () {
 });
 
 Route::get('/', [HomeController::class,'index']);

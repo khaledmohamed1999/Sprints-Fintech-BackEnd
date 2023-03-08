@@ -24,7 +24,7 @@
                 <img style="display: inline-block;" src="{{ url('img/balance.jfif') }}" alt="">
                 <div style="display: inline-block;" class="border-bottom">
                     <div class="d-flex justify-content-between mb-3">
-                        <h5>Balance: {{Auth::user()['balance']}} EGP</h5>
+                        <h5>Balance: Auth::user()['balance'] EGP</h5>
                     </div>
                 </div>
                 <div class="pt-2">
@@ -36,6 +36,10 @@
                     <a href='{{ URL::current() . '/bank-linking' }}'
                         class="btn btn-block btn-primary font-weight-bold py-3">
                         Link Bank Card
+                    </a>
+                    <a href='{{ URL::current() . '/generate-card' }}'
+                        class="btn btn-block btn-primary font-weight-bold py-3">
+                        Generate Virtual Card
                     </a>
                 </div>
             </div>

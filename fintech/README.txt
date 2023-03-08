@@ -14,17 +14,13 @@ send money page
 recieve money page
 
 maged:
-admin/vendor (front)
-admin/add vendor ->crud
-admin/add user ->crud
 /transactiion manage -> search by (date -amount - user acc - trans type)
 register -> user (attributes-> two factor)
 
 
 hendy:
 bill payment page
-virtual card info page
-/generate-card->get
+
 
 
 khaled:
