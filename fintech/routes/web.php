@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/pay-online', [HomeController::class,'payOnline']);
     Route::get('/send-money', [WalletController::class,'sendMoneyView']);
+    
     Route::post('/send-money/send-money-request', [WalletController::class,'sendMoney']);
     Route::get('/request-money', [WalletController::class,'requestMoneyView']);
     Route::post('/request-money/send-request-money', [WalletController::class,'requestMoney']);

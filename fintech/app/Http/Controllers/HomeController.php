@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view("home");
+        $vendors=Vendor::all();
+        return view("home")->with([
+            'vendors'=>$vendors,
+        ]);
+    
     }
 
     public function contact()
