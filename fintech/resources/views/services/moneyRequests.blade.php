@@ -2,6 +2,17 @@
 @section('content')
     <link rel="stylesheet" href="{{ url('css/wallet/wallet.css') }}">
     <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col-12">
+                    <nav class="breadcrumb bg-light mb-30">
+                        <a class="breadcrumb-item text-dark" href="send-money">Send Money</a>
+                        <a class="breadcrumb-item text-dark" href="request-money">Request Money</a>
+                        <a class="breadcrumb-item text-dark" href="money-requests">See Requests</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
         <a class="btn btn-info ml-5" href="/money-requests/request-status">See Requests You Sent</a>
         <br>
         <br>

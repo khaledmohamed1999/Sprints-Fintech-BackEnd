@@ -2,9 +2,17 @@
 @section('content')
     <link rel="stylesheet" href="{{ url('css/wallet/wallet.css') }}">
     <div class="container-fluid">
-        <a class="btn btn-info ml-5" href="/money-requests">See Requests Sent To You</a>
-        <br>
-        <br>
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col-12">
+                    <nav class="breadcrumb bg-light mb-30">
+                        <a class="breadcrumb-item text-dark" href="send-money">Send Money</a>
+                        <a class="breadcrumb-item text-dark" href="request-money">Request Money</a>
+                        <a class="breadcrumb-item text-dark" href="money-requests">See Requests</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
         <div class="ml-5 inline col-lg-6">
             <h3 style="color: darkgreen">Your Requests</h3>
             @if (session()->has('messageError'))

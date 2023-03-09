@@ -7,7 +7,6 @@
                     <a class="breadcrumb-item text-dark" href="send-money">Send Money</a>
                     <a class="breadcrumb-item text-dark" href="request-money">Request Money</a>
                     <a class="breadcrumb-item text-dark" href="money-requests">See Requests</a>
-                    <a class="breadcrumb-item text-dark" href="pay-online">Pay Online</a>
                 </nav>
             </div>
         </div>
