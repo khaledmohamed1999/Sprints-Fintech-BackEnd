@@ -247,6 +247,8 @@ class WalletController extends TransactionController
     }
 
     private function sendM(Request $request){
+        if($request->email == Auth::user()->email)
+            return redirect('/send-money')->with('messageError','You cant send money to yourself');
         $amount = $request->post()['amount'];
         $receiver = User::where('email',$request->post()['email'])->first();
         if(is_null($receiver)){
