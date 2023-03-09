@@ -111,7 +111,7 @@
                                             @if (auth()->user()->is_admin == 1)
                                                 <a href="/admin" class="dropdown-item">Admin Dashboard</a>
                                             @endif
-                                            <a href="#" class="dropdown-item">My Profile</a>
+                                            <a href="/profile" class="dropdown-item">My Profile</a>
                                             <form method="POST" action="{{ url('/logout') }}">
                                                 @csrf
                                                 <a class="dropdown-item" href="{{ url('/logout') }}"

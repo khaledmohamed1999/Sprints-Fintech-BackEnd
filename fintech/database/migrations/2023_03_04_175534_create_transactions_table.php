@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('reciever_id')->nullable();
             $table->double('amount');
             $table->string('status');
-            $table->string('Method');
+            $table->string('method');
             $table->foreign('sender_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('reciever_id')->references('id')->on('users')->cascadeOnDelete();
         });

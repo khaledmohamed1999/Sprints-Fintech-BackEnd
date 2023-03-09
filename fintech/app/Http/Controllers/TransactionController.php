@@ -25,6 +25,7 @@ class TransactionController extends Controller
         $transaction['updated_at'] = now();
         $transaction['amount'] = $amount;
         $transaction['status'] = $status;
+        $transaction['method'] = $method;
         $transaction->save();
     }
 
@@ -39,6 +40,7 @@ class TransactionController extends Controller
         $transaction['updated_at'] = now();
         $transaction['amount'] = $amount;
         $transaction['status'] = $status;
+        $transaction['method'] = $method;
         $transaction->save();
 
     }
