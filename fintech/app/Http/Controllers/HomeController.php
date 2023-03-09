@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -28,10 +29,13 @@ class HomeController extends Controller
     }
     public function admin()
     {
+
         $users = User::all();
         $nusers = User::where('type', '=', 'user');
         $vendors = User::where('type', '=', 'vendor');
-        return view('admin.adminhome', compact('users','nusers','vendors'));
+        $transactions=Transaction::all();
+        $balance = User::sum('balance');
+        return view('admin.adminhome', compact('users','nusers','vendors','transactions','balance'));
         
     }
 }

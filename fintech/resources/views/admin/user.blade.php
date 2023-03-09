@@ -18,7 +18,7 @@
   <br>
   
     <div style="display: inline-flexbox">
-  <form method="POST" action="{{ url('admin/search') }}" enctype="multipart/form-data" >
+  <form method="POST" action="{{ url('admin/search/user') }}" enctype="multipart/form-data" >
     
     @csrf
     <label class="ml-5">Search By</label>
@@ -60,7 +60,7 @@
       <td>{{$user['balance']}}</td>
       <td>{{$user['type']}}</td>
       <td>
-        <a href="admin/user/transactions" style="color: green">Transactions</a>
+        <a href="{{url('admin/user/'.$user['id'].'/transactions')}}" style="color: green">Transactions</a>
       </td>
       <td   ><a  class="btn btn-primary" href="{{url('admin/users/'.$user['id'].'/edit')}}" role="button">EDIT</a></td> <td >
         <form action="{{ url('admin/users/'. $user['id']) }}" method="POST">

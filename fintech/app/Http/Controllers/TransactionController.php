@@ -231,7 +231,7 @@ class TransactionController extends Controller
                         ->where('sender_id',$userID)
                         ->get();
 
-        if($checkSend->count() > 0 || $checkRecieve->count() > 0)
+        if($checkSend->count() > 0 && $checkRecieve->count() > 0)
             return true;
         else
             return false;

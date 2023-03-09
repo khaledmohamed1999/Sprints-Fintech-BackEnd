@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
@@ -62,15 +63,17 @@ Route::middleware('auth')->group(function () {
 Route::middleware('can:is_admin')->prefix('/admin')->group (function () {
 
     Route::get('', [HomeController::class,'admin']);
-    Route::get('/users', [UserController::class,'user'])->name('users');
-    Route::post('/vendor/create', [UserController::class,'store']);
-    Route::get('/users/{id}/create', [UserController::class, 'create']);
-    Route::get('/users/{id}/edit', [UserController::class, 'edit']);
-    Route::patch('/users/{id}', [UserController::class, 'update']);
-    Route::delete('/users/{id}/', [UserController::class, 'delete']);
-    Route::get('/vendors', [UserController::class,'vendor'])->name('vendors');
-    Route::post('/search', [UserController::class,'search'])->name('search');
-    
+    Route::get('/users', [AdminController::class,'user'])->name('users');
+    Route::post('/vendor/create', [AdminController::class,'store']);
+    Route::get('/users/{id}/create', [AdminController::class, 'create']);
+    Route::get('/users/{id}/edit', [AdminController::class, 'edit']);
+    Route::patch('/users/{id}', [AdminController::class, 'update']);
+    Route::delete('/users/{id}/', [AdminController::class, 'delete']);
+    Route::get('/vendors', [AdminController::class,'vendor'])->name('vendors');
+    Route::get('/transactions', [AdminController::class,'transactions_all']);
+    Route::post('/search/user', [AdminController::class,'search_user'])->name('search');
+    Route::post('/search/transaction', [AdminController::class,'search_transaction']);
+    Route::get('/user/{id}/transactions', [AdminController::class, 'transactions']);
    
 });
 

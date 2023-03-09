@@ -35,7 +35,9 @@
           <li>
             <a href="{{url('admin/vendors')}}" ><span class="fa-solid fa-store mr-3"></span>Vendors</a>
           </li>
-         
+          <li>
+            <a href="{{url('admin/transactions')}}" ><span class="fa-solid fa-money-bill-transfer mr-3"></span>Transactions</a>
+          </li>
           <li class="ml-3">
             <form method="POST" action="{{ route('logout') }}">
               @csrf
