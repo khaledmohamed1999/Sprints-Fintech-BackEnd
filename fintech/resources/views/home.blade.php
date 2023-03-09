@@ -99,19 +99,6 @@
                     </div>
                 </a>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="{{ url('/send-money') }}">
-                    <div class="cat-item d-flex align-items-center mb-4">
-                        <div class="overflow-hidden block" style="width: 100px; height: 100px">
-                            <img class="img-fluid" src="{{ url('img/pay.png') }}" alt="" />
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Pay Online</h6>
-                            <small class="text-body"></small>
-                        </div>
-                    </div>
-                </a>
-            </div>
         </div>
     </div>
 
