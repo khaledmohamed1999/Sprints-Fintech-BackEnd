@@ -7,6 +7,7 @@
                 <nav class="breadcrumb bg-light mb-30">
                     <a class="breadcrumb-item text-dark" href="send-money">Send Money</a>
                     <a class="breadcrumb-item text-dark" href="request-money">Request Money</a>
+                    <a class="breadcrumb-item text-dark" href="money-requests">See Requests</a>
                     <a class="breadcrumb-item text-dark" href="pay-online">Pay Online</a>
                 </nav>
             </div>
@@ -91,7 +92,12 @@
                             <td class="align-middle">{{$namesArray[$counter]}}</td>
                             <td class="align-middle">{{$namesArray[$counter + 1]}}</td>
                             <td class="align-middle">{{$transaction->amount}} EGP</td>
-                            <td class="align-middle">{{$transaction->status}}</td>
+                            @if ($transaction->status == "Successful")
+                                <td style="color: blue" class="align-middle">{{$transaction->status}}</td>
+                            @endif
+                            @if ($transaction->status == "Failed")
+                                <td style="color: red" class="align-middle">{{$transaction->status}}</td>
+                            @endif
                         </tr>
                         <p hidden>{{$counter += 2}}</p>
                     @endforeach

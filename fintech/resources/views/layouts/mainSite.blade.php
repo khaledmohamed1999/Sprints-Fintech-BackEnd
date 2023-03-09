@@ -81,6 +81,9 @@
                                     <a href="{{ url('/request-money') }}"
                                         class="dropdown-item {{ request()->segment(1) == 'request-money' ? 'active' : '' }}">Request
                                         Money</a>
+                                    <a href="{{ url('/money-requests') }}"
+                                        class="dropdown-item {{ request()->segment(1) == 'money-requests' ? 'active' : '' }}">See
+                                        Requests</a>
                                     <a href="{{ url('/pay-online') }}"
                                         class="dropdown-item {{ request()->segment(1) == 'pay-online' ? 'active' : '' }}">Pay
                                         Online</a>
@@ -105,17 +108,16 @@
 
                                 @auth
                                     <div class="nav-item dropdown ">
-                                        <a href=""class="nav-link dropdown-toggle "data-toggle="dropdown">Hello {{ auth()->user()->name }} <i
-                                                class="fa fa-angle-down mt-1"></i></a>
+                                        <a href=""class="nav-link dropdown-toggle "data-toggle="dropdown">Hello
+                                            {{ auth()->user()->name }} <i class="fa fa-angle-down mt-1"></i></a>
                                         <div class="dropdown-menu bg-primary rounded-0 border-0 m-0 ">
                                             @if (auth()->user()->is_admin == 1)
                                                 <a href="/admin" class="dropdown-item">Admin Dashboard</a>
                                             @endif
                                             <a href="#" class="dropdown-item">My Profile</a>
-                                            <form method="POST" action="http://127.0.0.1:8000/logout">
+                                            <form method="POST" action="{{ url('/logout') }}">
                                                 @csrf
-                                                <a class="dropdown-item"
-                                                    href="http://127.0.0.1:8000/logout"
+                                                <a class="dropdown-item" href="{{ url('/logout') }}"
                                                     onclick="event.preventDefault();
                                                                 this.closest('form').submit();">Log
                                                     Out</a>
@@ -128,7 +130,8 @@
                     </div>
 
                     <div class="navbar-nav  py-0 d-none d-lg-block">
-                        <a href="" class="btn px-0 ml-3"><i class="fa-brands fa-facebook text-primary"></i></a>
+                        <a href="" class="btn px-0 ml-3"><i
+                                class="fa-brands fa-facebook text-primary"></i></a>
                         <a href="" class="btn px-0 ml-3"><i class="fa-brands fa-twitter text-primary"></i></a>
                         <a href="" class="btn px-0 ml-3"><i
                                 class="fa-brands fa-instagram text-primary"></i></a>

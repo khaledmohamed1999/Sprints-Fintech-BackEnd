@@ -40,7 +40,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/send-money', [WalletController::class,'sendMoneyView']);
     Route::post('/send-money/send-money-request', [WalletController::class,'sendMoney']);
     Route::get('/request-money', [WalletController::class,'requestMoneyView']);
+    Route::post('/request-money/send-request-money', [WalletController::class,'requestMoney']);
     Route::get('/pay-bills', [WalletController::class,'payBills']);
+    Route::get('/money-requests', [WalletController::class,'requestsView']);
+    Route::get('/money-requests/{id}/{status}', [WalletController::class,'resolveMoneyRequest']);
+    Route::get('/money-requests/request-status', [WalletController::class,'requestStatusView']);
     
 
 });

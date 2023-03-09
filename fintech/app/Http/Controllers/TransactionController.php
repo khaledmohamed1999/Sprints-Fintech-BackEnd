@@ -55,6 +55,10 @@ class TransactionController extends Controller
 
         switch ($filter) {
             case 'sender':
+                $check  = $this->transactionSecurity(User::where('email', $search)->first());
+                if(!$check)
+                    return redirect()->back()->with('messageError','Youre not authorized to see the transactions of that user');
+                
                 $sender = User::where('email', $search)->first();
                 if(is_null($sender))
                     return redirect()->back()->with('messageError','User Doesnt Exist');
@@ -63,23 +67,23 @@ class TransactionController extends Controller
                     if($transactions->count() == 0)
                         return redirect()->back()->with('messageError','This user didnt send any transactions');
                     else{
-                        $check  = $this->transactionSecurity($sender);
-                        if($check){
-                            $namesArray = $this->createNamesArray($transactions);
-                            $transactions = Transaction::where('sender_id',$sender->id)->paginate(10);
-                            $transactions->appends(['filterSearch' => $search, 'filterForTransaction' => $filter]);
-                            return view('services.filteredTransactions')->with([
-                                'transactions' => $transactions,
-                                'namesArray' => $namesArray,
-                                'counter'=> 0
-                            ]);
-                        }
-                        else
-                            return redirect()->back()->with('messageError','Youre not authorized to see the transactions of that user');
+
+                        $namesArray = $this->createNamesArray($transactions);
+                        $transactions = Transaction::where('sender_id',$sender->id)->paginate(10);
+                        $transactions->appends(['filterSearch' => $search, 'filterForTransaction' => $filter]);
+                        return view('services.filteredTransactions')->with([
+                            'transactions' => $transactions,
+                            'namesArray' => $namesArray,
+                            'counter'=> 0
+                        ]);
                     }
                 }
             
             case 'receiver':
+                $check  = $this->transactionSecurity(User::where('email', $search)->first());
+                if(!$check)
+                    return redirect()->back()->with('messageError','Youre not authorized to see the transactions of that user');
+
                 $reciever = User::where('email', $search)->first();
                 if(is_null($reciever))
                     return redirect()->back()->with('messageError','User Doesnt Exist');
@@ -88,29 +92,24 @@ class TransactionController extends Controller
                     if($transactions->count() == 0)
                         return redirect()->back()->with('messageError','This user didnt send any transactions');
                     else{
-                        $check  = $this->transactionSecurity($reciever);
-                        if($check){
-                            $namesArray = $this->createNamesArray($transactions);
-                            $transactions = Transaction::where('reciever_id',$reciever->id)->paginate(10);
-                            $transactions->appends(['filterSearch' => $search, 'filterForTransaction' => $filter]);
-                            return view('services.filteredTransactions')->with([
-                                'transactions' => $transactions,
-                                'namesArray' => $namesArray,
-                                'counter'=> 0
-                            ]);
-                        }
-                        else
-                            return redirect()->back()->with('messageError','Youre not authorized to see the transactions of that user');
+                        $namesArray = $this->createNamesArray($transactions);
+                        $transactions = Transaction::where('reciever_id',$reciever->id)->paginate(10);
+                        $transactions->appends(['filterSearch' => $search, 'filterForTransaction' => $filter]);
+                        return view('services.filteredTransactions')->with([
+                            'transactions' => $transactions,
+                            'namesArray' => $namesArray,
+                            'counter'=> 0
+                        ]);   
                     }
                 }
 
             case 'id':
                 if(is_numeric($search)){
-                    $transaction = Transaction::findOrFail($search);
+                    $transaction = Transaction::find($search);
                     if(is_null($transaction))
-                        return redirect()->back()->with('messageError','ID Doesnt exist');
+                        return redirect()->back()->with('messageError','This Transaction Doesnt exist');
                     else{
-                        if(($transaction->sender_id != Auth::id()) && ($transaction->reciever_id != Auth::id()))
+                        if(($transaction->sender_id != Auth::id()) || ($transaction->reciever_id != Auth::id()))
                             return redirect()->back()->with('messageError','Youre not authorized to see that transaction');
                         else{
                             $namesArray = $this->createNamesArray($transaction);
