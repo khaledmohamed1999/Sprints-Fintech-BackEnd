@@ -79,6 +79,7 @@
                         <th>Reciever</th>
                         <th>Amount</th>
                         <th>Status</th>
+                        <th>Method<th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
@@ -98,6 +99,7 @@
                             @if ($transaction->status == "Failed")
                                 <td style="color: red" class="align-middle">{{$transaction->status}}</td>
                             @endif
+                            <td class="align-middle">{{$transaction->method}}</td>
                         </tr>
                         <p hidden>{{$counter += 2}}</p>
                     @endforeach

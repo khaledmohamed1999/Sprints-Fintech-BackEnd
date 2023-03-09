@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('2fa_token')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->boolean('two_factor_authenticated')->default(false);
-            $table->float('balance');
+            $table->double('balance');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

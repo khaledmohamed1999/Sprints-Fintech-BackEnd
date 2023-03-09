@@ -10,6 +10,7 @@ use App\Models\contact;
 use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -29,7 +30,7 @@ class HomeController extends Controller
     public function storeContact(Request $request){
         $contact = new contact;
        //
-        $contact['user_id']=1;
+        $contact['user_id']=Auth::id();
         //
         $contact['subject']=$request['subject'];
         $contact['message']=$request['message'];

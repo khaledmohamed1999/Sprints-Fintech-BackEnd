@@ -39,7 +39,7 @@
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror
     <br>
-    <label>Is Admin <input name="is_admin" type="checkbox" {{ old('is_admin'=='ON') ? 'checked' : '' }} /></label>
+    <label>Is Admin <input name="is_admin" type="checkbox" {{ old('is_admin', $user->is_admin) ? 'checked' : '' }} /></label>
     <br />
     
     <button class="btn btn-primary">Edit</button>

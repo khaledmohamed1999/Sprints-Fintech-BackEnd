@@ -9,7 +9,7 @@
   <br>
    
   <div style="display: inline-flexbox">
-    <form method="POST" action="{{ url('admin/search/transaction') }}" enctype="multipart/form-data" >
+    <form method="GET" action="{{ url('admin/search/transaction') }}" enctype="multipart/form-data" >
       
       @csrf
       <label class="ml-5">Search By</label>

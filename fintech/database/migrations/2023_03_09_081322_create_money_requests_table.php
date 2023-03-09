@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('request_sender_id');
             $table->unsignedBigInteger('request_reciever_id');
-            $table->float('amount');
+            $table->double('amount');
             $table->string('reason');
             $table->string('status')->default('Not Resolved');
             $table->foreign('request_sender_id')->references('id')->on('users')->cascadeOnDelete();

@@ -53,6 +53,7 @@ class AdminController extends Controller
         $name=$request['name'];
         $serarch=$request['search_name'];
           $users=User::where($serarch,'like',  '%' . $name .'%')->where('type','=','user')->paginate(5);
+          $users->appends(['name' => $name, 'search_name' => $serarch]);
           return view ('admin.user',compact('users'));
             }
           
@@ -134,6 +135,7 @@ class AdminController extends Controller
                       $transactions=Transaction::where($serarch,'=',   $name )->paginate(10);
                       else
                       $transactions=Transaction::where($serarch,'like','%'.$name.'%' )->paginate(10);
+                      $transactions->appends(['name' => $name, 'search_name' => $serarch]);
                       return view ('admin.transaction',compact('transactions'));
                         }
 }

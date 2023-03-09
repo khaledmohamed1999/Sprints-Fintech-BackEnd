@@ -59,7 +59,7 @@
                     <button type="button"class="navbar-toggler"data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="collapse navbar-collapse justify-content-around" id="navbarCollapse">
                         <div class="col-lg-5">
                             <a href="" class="text-decoration-none">
                                 <span class="h1 text-uppercase text-primary bg-dark px-2">Fin</span>

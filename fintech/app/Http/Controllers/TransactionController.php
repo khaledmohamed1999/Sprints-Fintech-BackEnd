@@ -17,7 +17,7 @@ class TransactionController extends Controller
         return view('services.filteredTransactions');
     }
 
-    protected function addTransactionRecordFromFundManagement(object $user, float $amount, string $status){
+    protected function addTransactionRecordFromFundManagement(object $user, float $amount, string $status, string $method){
         $transaction = new Transaction;
         $transaction['sender_id'] = $user['id'];
         $transaction['reciever_id'] = $user['id'];
@@ -28,7 +28,7 @@ class TransactionController extends Controller
         $transaction->save();
     }
 
-    protected function addTransactionRecordFromService(object $sender, float $amount,int $receiver ,string $status){
+    protected function addTransactionRecordFromService(object $sender, float $amount,int $receiver ,string $status, string $method){
         $transaction = new Transaction;
         if($receiver == 0)
             $transaction['reciever_id'] = null;
@@ -109,7 +109,7 @@ class TransactionController extends Controller
                     if(is_null($transaction))
                         return redirect()->back()->with('messageError','This Transaction Doesnt exist');
                     else{
-                        if(($transaction->sender_id != Auth::id()) || ($transaction->reciever_id != Auth::id()))
+                        if(($transaction->sender_id != Auth::id()) && ($transaction->reciever_id != Auth::id()))
                             return redirect()->back()->with('messageError','Youre not authorized to see that transaction');
                         else{
                             $namesArray = $this->createNamesArray($transaction);

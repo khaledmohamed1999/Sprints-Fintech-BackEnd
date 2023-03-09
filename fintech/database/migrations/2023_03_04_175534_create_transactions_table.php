@@ -16,8 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('sender_id');
             $table->timestamps();
             $table->unsignedBigInteger('reciever_id')->nullable();
-            $table->float('amount');
+            $table->double('amount');
             $table->string('status');
+            $table->string('Method');
             $table->foreign('sender_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('reciever_id')->references('id')->on('users')->cascadeOnDelete();
         });

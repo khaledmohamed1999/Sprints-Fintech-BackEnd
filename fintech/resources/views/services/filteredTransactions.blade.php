@@ -19,10 +19,11 @@
                         <th>Reciever</th>
                         <th>Amount</th>
                         <th>Status</th>
+                        <th>Method</th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
-                    @if ($transactions instanceof \Illuminate\Pagination\LengthAwarePaginator || $transactions->currentPage() > 1)
+                    @if ($transactions instanceof \Illuminate\Pagination\LengthAwarePaginator && $transactions->currentPage() >= 1)
                         <p hidden>{{$counter += (($transactions->perPage() * 2) * ($transactions->currentPage()-1))}}</p>
                         @foreach ($transactions as $transaction)
                             <tr>
@@ -37,6 +38,7 @@
                                 @if ($transaction->status == "Failed")
                                     <td style="color: red" class="align-middle">{{$transaction->status}}</td>
                                 @endif
+                                <td class="align-middle">{{$transactions->status}}</td>
                             </tr>
                             <p hidden>{{$counter += 2}}</p>
                         @endforeach
@@ -49,12 +51,13 @@
                             <td class="align-middle">{{$namesArray[$counter + 1]}}</td>
                             <td class="align-middle">{{$transactions->amount}} EGP</td>
                             <td class="align-middle">{{$transactions->status}}</td>
+                            <td class="align-middle">{{$transactions->method}}</td>
                         </tr>
                     @endif
                 </tbody>
             </table>
             <br>
-            @if ($transactions instanceof \Illuminate\Pagination\LengthAwarePaginator || $transactions->currentPage() > 1)
+            @if ($transactions instanceof \Illuminate\Pagination\LengthAwarePaginator && $transactions->currentPage() >= 1)
             <div class="d-flex justify-content-center">{{$transactions->links()}}</div>
             @endif
             </div>

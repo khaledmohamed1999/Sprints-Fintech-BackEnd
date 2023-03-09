@@ -27,7 +27,10 @@
               
         <ul class="list-unstyled components mb-5">
           <li >
-            <a href="{{url('/admin')}}" ><span class="fa fa-home mr-3"></span> Home</a>
+            <a href="{{url('/')}}" ><span class="fa fa-home mr-3"></span> Home Page</a>
+          </li>
+          <li >
+            <a href="{{url('/admin')}}" ><span class="fa fa-home mr-3"></span> Dashboard</a>
           </li>
           <li>
             <a href="{{url('admin/users')}}" ><span class="fa-solid fa-user mr-3"></span>Users</a>

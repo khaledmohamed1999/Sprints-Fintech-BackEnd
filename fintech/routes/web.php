@@ -77,8 +77,8 @@ Route::middleware('can:is_admin')->prefix('/admin')->group (function () {
     Route::delete('/users/{id}/', [AdminController::class, 'delete']);
     Route::get('/vendors', [AdminController::class,'vendor'])->name('vendors');
     Route::get('/transactions', [AdminController::class,'transactions_all']);
-    Route::post('/search/user', [AdminController::class,'search_user'])->name('search');
-    Route::post('/search/transaction', [AdminController::class,'search_transaction']);
+    Route::get('/search/user', [AdminController::class,'search_user'])->name('search');
+    Route::get('/search/transaction', [AdminController::class,'search_transaction']);
     Route::get('/user/{id}/transactions', [AdminController::class, 'transactions']);
    
 });
