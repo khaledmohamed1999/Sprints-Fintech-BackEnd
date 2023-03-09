@@ -178,8 +178,8 @@ class WalletController extends TransactionController
                 $account = BankAccount::find($defaultPaymentCard->number);
                 if($account){
                     $oldfunds = $account->funds;
-                    User::findOrFail(Auth::id())->update(['balance' => ($userBalance - $amount)]);
-                    BankAccount::findOrFail($defaultPaymentCard->number)->update(['funds' => ($oldfunds + $amount)]);
+                    DB::table('users')->where('id',Auth::id())->update(['balance' => ($userBalance - $amount)]);
+                    DB::table('bank_accounts')->where('card_number', $defaultPaymentCard->number)->update(['funds' => ($oldfunds + $amount)]);
                     $this->addTransactionRecordFromFundManagement(Auth::user(),$amount,'Successful');
                     return redirect('/wallet')->with('messageSuc','Amount added to bank successfully');
                 }
@@ -218,8 +218,8 @@ class WalletController extends TransactionController
             if($account){
                 if($account->funds > 0 && $account->funds >= $amount){
                     $oldfunds = $account->funds;
-                    User::findOrFail(Auth::id())->update(['balance' => ($userBalance + $amount)]);
-                    BankAccount::findOrFail($defaultPaymentCard->number)->update(['funds' => ($oldfunds - $amount)]);
+                    DB::table('users')->where('id',Auth::id())->update(['balance' => ($userBalance + $amount)]);
+                    DB::table('bank_accounts')->where('card_number', $defaultPaymentCard->number)->update(['funds' => ($oldfunds - $amount)]);
                     $this->addTransactionRecordFromFundManagement(Auth::user(),$amount,'Successful');
                     return redirect('/wallet')->with('messageSuc','Amount added to wallet successfully');
                 }
@@ -261,8 +261,8 @@ class WalletController extends TransactionController
             $receiverBlanace = $receiver['balance'];
 
             if($amount > 0 && $amount <= $senderBalance){
-                User::findOrFail(Auth::id())->update(['balance' => ($senderBalance - $amount)]);
-                $receiver->update(['balance' => ($receiverBlanace + $amount)]);
+                DB::table('users')->where('id',Auth::id())->update(['balance' => ($senderBalance - $amount)]);
+                DB::table('users')->where('id',$receiver->id)->update(['balance' => ($receiverBlanace + $amount)]);
                 $this->addTransactionRecordFromService(Auth::user(),$amount,$receiver['id'],'Successful');
                 return redirect('/send-money')->with('messageSuc','Money Sent Successfully');
             }
@@ -321,28 +321,20 @@ class WalletController extends TransactionController
                     $userOldBalance = Auth::user()->balance;
                     DB::table('users')->where('id', $request->request_sender_id)->update(['balance' => ($moneyReceiverOldBalance + $request->amount)]);
                     DB::table('users')->where('id', Auth::id())->update(['balance' => ($userOldBalance - $request->amount)]);
-                    DB::table('money_requests')->where('id', $id)->update(['status' => 'Accepted']);
+                    DB::table('money_requests')->where('id', $id)->update(['status' => $status]);
                     $this->addTransactionRecordFromService(Auth::user(),$request->amount,$request->request_sender_id,'Successful');
                     return redirect('/money-requests')->with('messageSuc','Request Accepted');
                 }
 
                 else{
-                    MoneyRequest::find($id)->update(['status' => 'Rejected']);
+                    DB::table('money_requests')->where('id', $id)->update(['status' => 'Rejected']);
                     return redirect('/money-requests')->with('messageError','You dont have enough funds to send');
                 }
             
             case 'Rejected':
-                MoneyRequest::find($id)->update(['status' => $status]);
+                DB::table('money_requests')->where('id', $id)->update(['status' => $status]);
                 return redirect('/money-requests')->with('messageSuc','Request Rejected');
         }
-        
-
-
-
-        // User::findOrFail(Auth::id())->update(['balance' => ($senderBalance - $amount)]);
-        // $receiver->update(['balance' => ($receiverBlanace + $amount)]);
-        // $this->addTransactionRecordFromService(Auth::user(),$amount,$receiver['id'],'Successful');
-        // return redirect('/send-money')->with('messageSuc','Money Sent Successfully');
     }
     
 }
