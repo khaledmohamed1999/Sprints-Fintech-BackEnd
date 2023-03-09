@@ -73,52 +73,60 @@
             <span class="bg-secondary pr-3">Services</span>
         </h2>
         <div class="row px-xl-5 pb-3">
-            <a class="text-decoration-none" href="">
-                <div class="cat-item d-flex align-items-center mb-4">
-                    <div class="overflow-hidden block" style="width: 100px; height: 100px">
-                        <img class="img-fluid" [src]="category.imageUrl" alt="" />
-                    </div>
-                    <div class="flex-fill pl-3">
-                        <h6>Service</h6>
-                        <small class="text-body"></small>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-
-    {{-- <div class="container-fluid pt-5">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
-            <span class="bg-secondary pr-3">Services</span>
-        </h2>
-        <div class="row px-xl-5 pb-3">
-            @foreach ($services as $service)
-                <a class="text-decoration-none" [href]="category.url">
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <a class="text-decoration-none" href="{{ url('/send-money') }}">
                     <div class="cat-item d-flex align-items-center mb-4">
                         <div class="overflow-hidden block" style="width: 100px; height: 100px">
-                            <img class="img-fluid" [src]="category.imageUrl" alt="" />
+                            <img class="img-fluid" src="{{ url('img/send.png') }}" alt="" />
                         </div>
                         <div class="flex-fill pl-3">
-                            <h6>{{ $service->name }}</h6>
+                            <h6>Send Money</h6>
                             <small class="text-body"></small>
                         </div>
                     </div>
                 </a>
-            @endforeach
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <a class="text-decoration-none" href="{{ url('/send-money') }}">
+                    <div class="cat-item d-flex align-items-center mb-4">
+                        <div class="overflow-hidden block" style="width: 100px; height: 100px">
+                            <img class="img-fluid" src="{{ url('img/recieve.png') }}" alt="" />
+                        </div>
+                        <div class="flex-fill pl-3">
+                            <h6>Request Money</h6>
+                            <small class="text-body"></small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <a class="text-decoration-none" href="{{ url('/send-money') }}">
+                    <div class="cat-item d-flex align-items-center mb-4">
+                        <div class="overflow-hidden block" style="width: 100px; height: 100px">
+                            <img class="img-fluid" src="{{ url('img/pay.png') }}" alt="" />
+                        </div>
+                        <div class="flex-fill pl-3">
+                            <h6>Pay Online</h6>
+                            <small class="text-body"></small>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
-    </div> --}}
+    </div>
 
 
     <div class="container-fluid py-5">
         <div class="row px-xl-5">
+            @foreach ($vendors as $vendor)
             <div class="col">
                 <div class="owl-carousel vendor-carousel">
                     <div class="bg-light p-4">
-                        <img src="{{ url('img/vendor-1.jpg') }}" alt="" />
+                        <img src="{{ url('storage/vendors/'.$vendor->image_url) }}" alt="" />
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 @endsection

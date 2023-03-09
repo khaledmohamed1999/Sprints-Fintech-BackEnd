@@ -2,6 +2,13 @@
 @section('content')
     <!-- Breadcrumb Start -->
     <div class="container-fluid">
+        @if ($message=Session::get('success'))
+        <div class="alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert"></button>
+            <strong>{{$message}}</strong>
+        </div>
+        
+    @endif
         <div class="row px-xl-5">
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
@@ -12,7 +19,6 @@
         </div>
     </div>
     <!-- Breadcrumb End -->
-
     <!-- Contact Start -->
     <div class="container-fluid">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
@@ -22,14 +28,15 @@
             <div class="col-lg-7 mb-5">
                 <div class="contact-form bg-light p-30">
                     <div id="success"></div>
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                    <form name="sentMessage" id="contactForm" novalidate="novalidate" method="POST" action="{{url('contact')}}">
+                        @csrf
                         <div class="control-group">
-                            <input type="text" class="form-control" id="subject" placeholder="Subject"
+                            <input type="text" class="form-control" name="subject" placeholder="Subject"
                                 required="required" data-validation-required-message="Please enter a subject" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <textarea class="form-control" rows="8" id="message" placeholder="Message" required="required"
+                            <textarea class="form-control" rows="8" name="message" placeholder="Message" required="required"
                                 data-validation-required-message="Please enter your message"></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
