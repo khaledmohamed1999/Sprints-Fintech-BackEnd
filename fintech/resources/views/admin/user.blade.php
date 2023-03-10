@@ -36,6 +36,7 @@
     <input class=" border ml-5" type="text" placeholder="Search here" name="name" style="width: 255px">
 								<button class="btn"><i class="fa fa-search"></i></button>
 </form>
+<a href="{{url('admin/users/pdf')}}"  class="btn btn-success  " style="margin:0 0 1% 85% "><i class="fas fa-file-download"></i> Download PDF</a>
     </div>
 
 <table class="table ml-2" style="width: 80vw">

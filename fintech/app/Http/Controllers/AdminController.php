@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Vendor;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 
@@ -127,6 +128,28 @@ class AdminController extends Controller
             $transactions=Transaction::paginate(10);
             return view('admin.transaction',compact('transactions'));
             
+                }
+        public function transactions_all_pdf( ){
+            $transactions=Transaction::all();
+            foreach ($transactions as $transaction) {
+                $user = user::findOrFail($transaction['sender_id']);
+                $sender=$user['name'];
+                $transaction['sender']=$sender;
+                $reciever = user::findOrFail($transaction['reciever_id']);
+                $reciever=$user['name'];
+                $transaction['reciever']=$reciever;
+            }
+            $transactions = $transactions->toArray();
+            view()->share('transactions',$transactions);
+            $pdf= Pdf::loadView('admin.transaction_pdf', $transactions);    
+             return $pdf->download('admin.transaction_pdf.pdf');
+                }
+        public function users_all_pdf( ){
+            $users=User::all();
+            $users = $users->toArray();
+            view()->share('users',$users);
+            $pdf= Pdf::loadView('admin.user_pdf', $users);    
+             return $pdf->download('admin.user_pdf.pdf');
                 }
                 public function search_transaction(Request $request ){
                     

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'failover'),
 
     /*
     |--------------------------------------------------------------------------
@@ -46,20 +46,15 @@ return [
         ],
 
         'ses' => [
-            'transport' => 'ses',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
         ],
 
         'mailgun' => [
                 'domain' => env('MAILGUN_DOMAIN'),
                 'secret' => env('MAILGUN_SECRET'),
             'transport' => 'mailgun',
-            // 'client' => [
-            //     'timeout' => 5,
-            // ],
-        ],
-
-        'postmark' => [
-            'transport' => 'postmark',
             // 'client' => [
             //     'timeout' => 5,
             // ],
@@ -79,11 +74,15 @@ return [
             'transport' => 'array',
         ],
 
+        'postmark' => [
+            'token' => env('POSTMARK_TOKEN'),
+        ],
         'failover' => [
             'transport' => 'failover',
             'mailers' => [
-                'smtp',
-                'log',
+                'postmark',
+                'mailgun',
+                'sendmail',
             ],
         ],
     ],

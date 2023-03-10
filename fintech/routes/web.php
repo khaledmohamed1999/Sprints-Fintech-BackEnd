@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('send-mail', [MailController::class, 'index']);
+Route::get('send-mail', [MailController::class, 'envelope']);
 
 
 Route::middleware('auth')->group(function () {
@@ -86,6 +86,8 @@ Route::middleware('can:is_admin')->prefix('/admin')->group (function () {
     Route::delete('/users/{id}/', [AdminController::class, 'delete']);
     Route::get('/vendors', [AdminController::class,'vendor'])->name('vendors');
     Route::get('/transactions', [AdminController::class,'transactions_all']);
+    Route::get('/transactions/pdf', [AdminController::class,'transactions_all_pdf']);
+    Route::get('/users/pdf', [AdminController::class,'users_all_pdf']);
     Route::get('/search/user', [AdminController::class,'search_user'])->name('search');
     Route::get('/search/transaction', [AdminController::class,'search_transaction']);
     Route::get('/user/{id}/transactions', [AdminController::class, 'transactions']);
