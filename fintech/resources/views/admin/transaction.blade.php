@@ -39,7 +39,7 @@
       <th><h5>Amount</h5></th>
       <th><h5>Status</h5></th>
       <th><h5>Date & Time</h5></th>
-      
+      <th><h5>Method</h5></th>
     </tr>
   </thead>
   <tbody>
@@ -56,6 +56,7 @@
         <td @if ($transaction['status']=='Failed') style="color: red" @endif  >{{$transaction['status']}}</td>
     </td>
     <td>{{$transaction['created_at']}}</td>
+    <td>{{$transaction['method']}}</td>
     </tr>
     <?php
 }

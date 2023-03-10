@@ -55,7 +55,7 @@
           <div class="ag-courses-item_bg "></div>
           <div class="fa-solid fa-circle-dollar-to-slot mr-3 ag-courses-item_title "> T o t a l &nbsp;&nbsp;B a l a n c e</div>
           <div class="ag-courses-item_title">
-            <br><span style="margin:60px;font-size: 50px" >{{$balance.'$'}}</span>
+            <br><span style="margin:40px;font-size: 50px" >{{$balance.'$'}}</span>
           </div>
   
           
