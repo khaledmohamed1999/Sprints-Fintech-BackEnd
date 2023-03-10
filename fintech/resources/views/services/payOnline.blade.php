@@ -21,7 +21,7 @@
 
            
             <div class="col-lg-4 mt-5">
-                <a class="text-decoration-none" href="#">
+                <a class="text-decoration-none" href="/wallet/generate-card">
                     <div class="cat-item d-flex align-items-center mb-4">
                         <div class="overflow-hidden block" style="width: 150px; height: 150px">
                             <img class="img-fluid" src="{{ url('img/debitCard.png') }}" alt="" />

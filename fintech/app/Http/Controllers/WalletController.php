@@ -300,7 +300,7 @@ class WalletController extends TransactionController
         $amount = $request->post()['amount'];
         $reason = $request->post()['reason'];
         if(is_null($amount) || is_null($reason))
-            return redirect('/send-money')->with('messageError','Please Fill Out Missing Fields');
+            return redirect('/request-money')->with('messageError','Please Fill Out Missing Fields');
         $receiver = User::where('email',$request->post()['email'])->first();
         if(is_null($receiver))
             return redirect('/request-money')->with('messageError','User Does Not Exist');

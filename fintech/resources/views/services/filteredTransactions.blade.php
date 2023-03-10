@@ -38,7 +38,7 @@
                                 @if ($transaction->status == "Failed")
                                     <td style="color: red" class="align-middle">{{$transaction->status}}</td>
                                 @endif
-                                <td class="align-middle">{{$transactions->status}}</td>
+                                <td class="align-middle">{{$transaction->status}}</td>
                             </tr>
                             <p hidden>{{$counter += 2}}</p>
                         @endforeach

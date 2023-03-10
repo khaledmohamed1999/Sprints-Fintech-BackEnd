@@ -28,6 +28,7 @@ class HomeController extends Controller
         return view("contact");
     }
     public function storeContact(Request $request){
+        $request->validate(contact::$rules);
         $contact = new contact;
        //
         $contact['user_id']=Auth::id();

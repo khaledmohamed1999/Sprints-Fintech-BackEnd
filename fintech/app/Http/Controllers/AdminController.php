@@ -135,9 +135,13 @@ class AdminController extends Controller
                 $user = user::findOrFail($transaction['sender_id']);
                 $sender=$user['name'];
                 $transaction['sender']=$sender;
-                $reciever = user::findOrFail($transaction['reciever_id']);
-                $reciever=$user['name'];
-                $transaction['reciever']=$reciever;
+                if($transaction['reciever_id'] == 0)
+                    $transaction['reciever']='Non Existent User';
+                else{
+                    $reciever = user::findOrFail($transaction['reciever_id']);
+                    $reciever=$user['name'];
+                    $transaction['reciever']=$reciever;
+                }
             }
             $transactions = $transactions->toArray();
             view()->share('transactions',$transactions);

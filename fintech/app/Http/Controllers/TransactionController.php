@@ -57,6 +57,8 @@ class TransactionController extends Controller
 
         switch ($filter) {
             case 'sender':
+                if(is_null(User::where('email', $search)->first()))
+                    return redirect()->back()->with('messageError','User doesnt exist');
                 $check  = $this->transactionSecurity(User::where('email', $search)->first());
                 if(!$check)
                     return redirect()->back()->with('messageError','Youre not authorized to see the transactions of that user');
@@ -82,6 +84,8 @@ class TransactionController extends Controller
                 }
             
             case 'receiver':
+                if(is_null(User::where('email', $search)->first()))
+                    return redirect()->back()->with('messageError','User doesnt exist');
                 $check  = $this->transactionSecurity(User::where('email', $search)->first());
                 if(!$check)
                     return redirect()->back()->with('messageError','Youre not authorized to see the transactions of that user');

@@ -33,11 +33,17 @@
                         <div class="control-group">
                             <input type="text" class="form-control" name="subject" placeholder="Subject"
                                 required="required" data-validation-required-message="Please enter a subject" />
+                                @error('subject')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
                             <textarea class="form-control" rows="8" name="message" placeholder="Message" required="required"
                                 data-validation-required-message="Please enter your message"></textarea>
+                                @error('message')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                             <p class="help-block text-danger"></p>
                         </div>
                         <div>

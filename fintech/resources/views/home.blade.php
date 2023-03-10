@@ -122,7 +122,7 @@
                 <div class="owl-carousel vendor-carousel">
                     @foreach ($vendors as $vendor)
                         <div class="bg-light p-4">
-                            <img src="{{ url('storage/' . $vendor->image_url) }}" alt="" />
+                            <img style="height: 10rem" src="{{ url('storage/' . $vendor->image_url) }}" alt="" />
                         </div>
                     @endforeach
                 </div>
