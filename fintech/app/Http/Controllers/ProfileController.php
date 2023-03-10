@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Bank;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +18,26 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $cards =Bank::where('user_id','=',auth()->id())->get();
         return view('profile.edit', [
             'user' => $request->user(),
+            'cards'=>$cards,
+        ]);
+    }
+    public function default(string $number ,Request $request): View
+    {
+        $cards=Bank::where('user_id','=',auth()->id())->get();
+        foreach ($cards as $card) {
+            $card['default']=0;
+            $card->save();
+        }
+        $bank=Bank::where('number','=',$number)->first();
+        $bank['default']=1;
+        $bank->save();
+        $cards=Bank::where('user_id','=',auth()->id())->get();
+        return view('profile.edit', [
+            'user' => $request->user(),
+            'cards'=>$cards,
         ]);
     }
 
@@ -27,6 +47,12 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
+        if($request['two_factor_authenticated']){
+            $request->user()->two_factor_authenticated =1;
+        }
+        else{
+            $request->user()->two_factor_authenticated =0;
+        }
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;

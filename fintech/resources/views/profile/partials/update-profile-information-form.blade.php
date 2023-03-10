@@ -22,6 +22,7 @@
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
+        
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
@@ -45,6 +46,12 @@
                     @endif
                 </div>
             @endif
+        </div>
+
+        <div>
+            <x-input-label for="two_factor_authenticated" :value="__('Two Factor Authentication')" />
+            <input name="two_factor_authenticated" type="checkbox" {{ old('two_factor_authenticated', $user->two_factor_authenticated) ? 'checked' : '' }}>
+            
         </div>
 
         <div class="flex items-center gap-4">

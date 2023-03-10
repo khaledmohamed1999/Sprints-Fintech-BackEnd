@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\BankCardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,9 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile/set-default-card/{number}', [ProfileController::class, 'default']);
     Route::get('/pay-online', [HomeController::class,'payOnline']);
     Route::get('/send-money', [WalletController::class,'sendMoneyView']);
-
+    
     Route::post('/send-money/send-money-request', [WalletController::class,'sendMoney']);
     Route::get('/request-money', [WalletController::class,'requestMoneyView']);
     Route::post('/request-money/send-request-money', [WalletController::class,'requestMoney']);
@@ -47,6 +49,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/money-requests', [WalletController::class,'requestsView']);
     Route::get('/money-requests/{id}/{status}', [WalletController::class,'resolveMoneyRequest']);
     Route::get('/money-requests/request-status', [WalletController::class,'requestStatusView']);
+    Route::resources([
+        // user bank card
+        'bank-card' => BankCardController::class,
+    ]);
     
 
 });
