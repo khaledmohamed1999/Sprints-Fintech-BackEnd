@@ -7,6 +7,7 @@ use App\Models\BankAccount;
 use App\Models\MoneyRequest;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Vendor;
 use App\Models\virtual_card;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -29,6 +30,15 @@ class WalletController extends TransactionController
     public function sendMoneyView()
     {
         return view("services.sendMoney");
+    }
+    public function sendMoneyVendor(string $id)
+    {   
+        $vendor = Vendor::findOrFail($id);
+        $userVendor=User::where('id','=',$vendor->user_id)->first();
+        return view("services.sendMoneyvendor")->with([
+            'vendor'=>$vendor,
+            'userVendor'=>$userVendor
+        ]);
     }
 
     public function requestMoneyView()
@@ -271,7 +281,7 @@ class WalletController extends TransactionController
                 DB::table('users')->where('id',Auth::id())->update(['balance' => ($senderBalance - $amount)]);
                 DB::table('users')->where('id',$receiver->id)->update(['balance' => ($receiverBlanace + $amount)]);
                 $this->addTransactionRecordFromService(Auth::user(),$amount,$receiver['id'],'Successful',"Send Money To User");
-                return redirect('/send-money')->with('messageSuc','Money Sent Successfully');
+                return redirect('/wallet')->with('messageSuc','Money Sent Successfully');
             }
 
             else{

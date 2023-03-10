@@ -44,17 +44,14 @@ class RegisteredUserController extends Controller
             Symbols'
             
         ]);
-
-        $user = User::create([
-           
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'phone_number' => $request->phone_number,
-            'type'=> 'user',
-            'balance'=> 0,
-            $user['two_factor_authenticated'] = $request['two_factor_authenticated']=='on' ? true : false,
-        ]);
+        $user = new User ;
+        $user['name'] = $request->name;
+        $user['email'] = $request->email;
+        $user['password'] = Hash::make($request->password);
+        $user['phone_number'] = $request->phone_number;
+        $user['type'] = 'user';
+        $user['balance'] = 0;
+        $user->save();
 
         event(new Registered($user));
 

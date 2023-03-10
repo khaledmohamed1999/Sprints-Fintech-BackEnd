@@ -36,6 +36,9 @@
             <a href="{{url('admin/users')}}" ><span class="fa-solid fa-user mr-3"></span>Users</a>
           </li>
           <li>
+            <a href="{{url('admin/vendors')}}" ><span class="fa-solid fa-store mr-3"></span>Vendors</a>
+          </li>
+          <li>
             <a href="{{url('admin/transactions')}}" ><span class="fa-solid fa-money-bill-transfer mr-3"></span>Transactions</a>
           </li>
           <li class="ml-3">

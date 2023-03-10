@@ -99,21 +99,34 @@
                     </div>
                 </a>
             </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <a class="text-decoration-none" href="{{ url('/pay-online') }}">
+                    <div class="cat-item d-flex align-items-center mb-4">
+                        <div class="overflow-hidden block" style="width: 100px; height: 100px">
+                            <img class="img-fluid" src="{{ url('img/pay.png') }}" alt="" />
+                        </div>
+                        <div class="flex-fill pl-3">
+                            <h6>Pay Online</h6>
+                            <small class="text-body"></small>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 
 
     <div class="container-fluid py-5">
         <div class="row px-xl-5">
-            @foreach ($vendors as $vendor)
             <div class="col">
                 <div class="owl-carousel vendor-carousel">
-                    <div class="bg-light p-4">
-                        <img src="{{ url('storage/vendors/'.$vendor->image_url) }}" alt="" />
-                    </div>
+                    @foreach ($vendors as $vendor)
+                        <div class="bg-light p-4">
+                            <img src="{{ url('storage/' . $vendor->image_url) }}" alt="" />
+                        </div>
+                    @endforeach
                 </div>
             </div>
-            @endforeach
         </div>
     </div>
 @endsection

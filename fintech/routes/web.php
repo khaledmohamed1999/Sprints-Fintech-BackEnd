@@ -7,6 +7,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\BankCardController;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('send-mail', [MailController::class, 'index']);
 
 
 Route::middleware('auth')->group(function () {
@@ -41,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/set-default-card/{number}', [ProfileController::class, 'default']);
     Route::get('/pay-online', [HomeController::class,'payOnline']);
     Route::get('/send-money', [WalletController::class,'sendMoneyView']);
+    Route::get('/send-money-vendor/{id}', [WalletController::class,'sendMoneyVendor']);
     
     Route::post('/send-money/send-money-request', [WalletController::class,'sendMoney']);
     Route::get('/request-money', [WalletController::class,'requestMoneyView']);

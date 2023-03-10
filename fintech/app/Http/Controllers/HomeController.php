@@ -45,7 +45,14 @@ class HomeController extends Controller
 
     public function payOnline()
     {
-        return view("services.payOnline");
+        $vendors=Vendor::all();
+        foreach ($vendors as$vendor) {
+            $user = User::where('id','=',$vendor->user_id)->first();
+            $vendor['name']=$user['name'];
+        }
+        return view("services.payOnline")->with([
+            'vendors'=>$vendors,
+        ]);
     }
     public function admin()
     {

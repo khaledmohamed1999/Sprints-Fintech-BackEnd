@@ -84,6 +84,9 @@
                                     <a href="{{ url('/money-requests') }}"
                                         class="dropdown-item {{ request()->segment(1) == 'money-requests' ? 'active' : '' }}">See
                                         Requests</a>
+                                        <a href="{{ url('/pay-online') }}"
+                                        class="dropdown-item {{ request()->segment(1) == 'pay-online' ? 'active' : '' }}">Pay
+                                        Online</a>
                                 </div>
                             </div>
                             <a href="{{ url('/contact-us') }}"

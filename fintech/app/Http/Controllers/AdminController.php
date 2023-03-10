@@ -43,7 +43,8 @@ class AdminController extends Controller
         $vendor = new Vendor;
      
                 $vendor->fill($request->post());
-                $vendor['image_url'] = $request['image'];
+                $imageUrl = $request->file('image')->store('vendors', ['disk' => 'public']);
+                $vendor['image_url'] = $imageUrl;
                 $vendor['user_id'] = $request['user_id'];
                 $vendor->save();
                 return redirect()->route('vendors')->with('message', 'Vendor Image Added Successfully');
