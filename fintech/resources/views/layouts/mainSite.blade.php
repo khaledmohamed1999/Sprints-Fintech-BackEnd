@@ -25,7 +25,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>EShop</title>
+    <title>FinTech</title>
+    <link rel = "icon" href = 
+    "img\output-onlinepngtools (1).png" 
+            type = "image/png">
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">

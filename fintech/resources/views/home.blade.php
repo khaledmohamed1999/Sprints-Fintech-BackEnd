@@ -23,8 +23,7 @@
                                         Send & recieve Money From and to anywhere in the world
                                         instantly
                                     </p>
-                                    <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
-                                        href="#">Shop Now</a>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -40,8 +39,7 @@
                                         Lorem rebum magna amet lorem magna erat diam stet. Sadips duo
                                         stet amet amet ndiam elitr ipsum diam
                                     </p>
-                                    <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
-                                        href="#">Shop Now</a>
+                                    
                                 </div>
                             </div>
                         </div>
